@@ -3,17 +3,19 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set history=700
 set autoread
+set nocompatible
+set hidden
+
+set autochdir
+set autoread
+set autowrite
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set ignorecase
-set smartcase
-set hlsearch
 set number
-
 set magic
-
 set showmatch
 set mat=2
 
@@ -31,6 +33,16 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 set smarttab
+set autoindent
+set smartindent
 
-set ai
-set si
+set lcs=tab:>-
+set list!
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Searching
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
