@@ -20,6 +20,8 @@ set magic
 set showmatch
 set mat=2
 
+colo elflord
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -71,5 +73,10 @@ nmap <leader>l <C-w>l
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>s :ConqueTerm bash<CR>
-nmap <leader>sh :ConqueTermSplit bash<CR>
-nmap <leader>sv :ConqueTermVSplit bash<CR>
+nmap <leader>sh :ConqueTermSplit zsh<CR>
+nmap <leader>sv :ConqueTermVSplit zsh<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Overrides
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufRead,BufNewFile $RT/* set tabstop=2 shiftwidth=2
