@@ -1,0 +1,27 @@
+! Xcursor
+Xcursor*theme:          Obsidian
+Xcursor*size:           20
+
+! Xft
+Xft*dpi:                96
+Xft*antialias:          True
+Xft*Hinting:            Full
+
+! URxvt
+URxvt*font:             xft:DejaVu Sans Mono:pixelsize=9
+URxvt*boldFont:         xft:DejaVu Sans Mono:pixelsize=9
+URxvt*scrollBar:        false
+URxvt*scrollBar_right:  false
+URxvt*depth:            32
+URxvt*foreground:       rgba:ffff/ffff/ffff/ffff
+URxvt*background:       rgba:0000/0000/0000/bbbb
+
+! dzen2
+dzen2*foreground:       #ffffff
+dzen2*background:       #1c1c1c
+
+! dmenu
+dmenu*foreground:       #555555
+dmenu*background:       #1c1c1c
+dmenu*selforeground:    #1c1c1c
+dmenu*selbackground:    #555555
