@@ -1,0 +1,10 @@
+# conkyrc file for bottom-left dzen bar
+###
+
+background no
+out_to_console yes
+out_to_x no
+update_interval 1
+
+TEXT
+${if_xmms2_connected}${xmms2_status} ${if_match "${xmms2_status}" != "Stopped"}${xmms2_artist}\ -\ ${xmms2_title}${endif}${else}Off${endif}

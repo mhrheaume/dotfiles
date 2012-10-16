@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+export GDBAR_FG="#3475aa"
+export GDBAR_FG2="#99cc66"
+export GDBAR_BG="#363636"
+export GDBAR_W=65
+export GDBAR_H=9
+
+export DZEN_FG="#ffffff"
+export DZEN_FG2="#909090"
+export DZEN_BG="#1a1a1a"
+export DZEN_W=960
+export DZEN_H=24
+export DZEN_FONT="Monospace-8"
+
+print_space() {
+  echo -n " ^fg($DZEN_FG2)|^fg() "
+}

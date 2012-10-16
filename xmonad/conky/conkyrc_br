@@ -1,0 +1,10 @@
+# conkyrc file for bottom-right dzen bar
+###
+
+background no
+out_to_console yes
+out_to_x no
+update_interval 1
+
+TEXT
+${battery_short} ${battery_time} ${wireless_essid} ${wireless_link_qual_perc}
