@@ -1,0 +1,3 @@
+>=dev-haskell/cabal-1.14
+>=x11-wm/xmonad-0.10
+>=x11-wm/xmonad-contrib-0.10

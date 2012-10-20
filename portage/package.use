@@ -1,0 +1,3 @@
+x11-base/xorg-server udev
+dev-vcs/git -perl -python
+app-admin/conky -ncurses
