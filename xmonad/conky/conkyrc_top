@@ -8,4 +8,4 @@ update_interval 1
 
 TEXT
 ${cpu cpu0} ${freq_g} ${mem} ${memmax} ${memperc} ${fs_type} ${fs_used} ${fs_size} ${fs_used_perc} \
-${downspeedf eth0} ${upspeedf eth0} ${time %a\ %b\ %d\ %H:%M}
+${time %a %b %d %H:%M}

@@ -1,16 +1,16 @@
 import XMonad
+import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutHints
-import XMonad.Util.EZConfig
 
 main = do
   myWorkspaceBar  <- spawnPipe myWorkspaceBarCmd
   myTopBar        <- spawnPipe myTopBarCmd
-  -- myBottomBar     <- spawnPipe myBottomBarCmd
+  myBottomBar     <- spawnPipe myBottomBarCmd
   xmonad $ myUrgencyHook $ defaultConfig
     { terminal            = myTerminal
     , workspaces          = myWorkspaces
@@ -33,16 +33,17 @@ myTerminal    = "urxvt -b 0"
 -- Appearance
 -----------------------------------------------------------
 
-myWhite, mySlate, myGray, myRed, myBlue : String
-myWhite   = "#ffffff"
-mySlate   = "#1a1a1a"
-myGray    = "#909090"
-myRed     = "#d51805"
-myBlue    = "#3475aa"
+myWhite, mySlate, myGray, myRed, myBlue :: String
+myWhite     = "#ffffff"
+mySlate     = "#1a1a1a"
+myGray      = "#909090"
+myDarkGray  = "#404040"
+myRed       = "#d51805"
+myBlue      = "#3475aa"
 
-myColorNormalBorder, myColorFocusedBorder : String
-myColorNormalBorder   = mySlate
-myColorFocusedBorder  = myGray
+myColorNormalBorder, myColorFocusedBorder :: String
+myColorNormalBorder   = myDarkGray
+myColorFocusedBorder  = myBlue
 
 -----------------------------------------------------------
 -- Status Bars
@@ -54,9 +55,9 @@ myWorkspaces  = ["1:dev","2:web","3:chat"]
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
 myWorkspaceBarCmd, myTopBarCmd :: String
-myWorkspaceBarCmd  = "dzen2 -p -x 0 -y 0 -w 960 -h 24 -ta l -fg '" ++ myWhite ++ "' -bg '" ++ mySlate ++ "' -fn 'Monospace-8'"
-myTopBarCmd        = "/home/matt/.xmonad/bars/sb_top.sh"
--- myBottomBarCmd     = "/home/matt/.xmonad/bars/sb_bottom.sh"
+myWorkspaceBarCmd  = "/home/matt/.xmonad/bars/sb_top_l.sh"
+myTopBarCmd        = "/home/matt/.xmonad/bars/sb_top_r.sh"
+myBottomBarCmd     = "/home/matt/.xmonad/bars/sb_bottom.sh"
 
 myLogHook h = dynamicLogWithPP $ defaultPP
   { ppCurrent         = dzenColor myBlue  "" . pad
@@ -108,10 +109,14 @@ myKeys = [ ("M-p"     , myDmenuLaunch )
 myDmenuLaunch :: MonadIO m => m ()
 myDmenuLaunch = spawn dmenuCmd
   where
-    nc = "-nf '" ++ myGray ++ "' -nb '" ++ mySlate
-    sc = "-sf '" ++ myBlue ++ "' -sb '" ++ mySlate
+    nc = "-nf '" ++ myGray ++ "' -nb '" ++ mySlate ++ "'"
+    sc = "-sf '" ++ myBlue ++ "' -sb '" ++ mySlate ++ "'"
     fn = "-fn 'Monospace-8'"
     dmenuCmd = "dmenu_run -b -i " ++ nc ++ " " ++ sc ++ " " ++ fn
 
 myRestart :: MonadIO m => m ()
-myRestart = spawn "killall conky dzen2 && xmonad --recompile && xmonad --restart"
+myRestart = spawn $ killproc ++ " && " ++ xm_recomp ++ " && " ++ xm_reset
+  where
+    killproc="killall sb_top_l.sh sb_top_r.sh sb_bottom.sh"
+    xm_recomp="xmonad --recompile"
+    xm_reset="xmonad --restart"

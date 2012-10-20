@@ -1,25 +1,25 @@
 #!/bin/zsh
 
-source ${HOME}/.xmonad/sb_env
+source ${HOME}/.xmonad/bars/sb_env
 
 # Left dzen bar
 DZEN_XPOS_L=0
-DZEN_YPOS_L=1176
+DZEN_YPOS_L=1026
 # Right dzen bar
-DZEN_XPOS_R=960
-DZEN_YPOS_R=1176
+DZEN_XPOS_R=840
+DZEN_YPOS_R=1026
 
-CONKYRC_L="${HOME}/.xmonad/conkyrc_bl"
-CONKYRC_R="${HOME}/.xmonad/conkyrc_br"
+CONKYRC_L="${HOME}/.xmonad/conky/conkyrc_bl"
+CONKYRC_R="${HOME}/.xmonad/conky/conkyrc_br"
 
 print_vol_info() {
   volperc=$(amixer get Master | grep "Mono:" | awk '{print $4}' | tr -d '[]%')
   mute_state=$(amixer get Master | grep "Mono:" | awk '{print $6}')
   echo -n "Volume "
   if [[ $mute_state == "[off]" ]]; then
-    echo -n "$(echo $volperc | gdbar -fg $GDBAR_FG2 -bg $GDBAR_BG -h $GDBAR_H -w $GDBAR_W -s o -ss 1 -sw 2 -nonl) "
+    echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
   else
-    echo -n "$(echo $volperc | gdbar -fg $GDBAR_FG -bg $GDBAR_BG -h $GDBAR_H -w $GDBAR_W -s o -ss 1 -sw 2 -nonl) "
+    echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
   fi
   echo -n "^fg($DZEN_FG2)${volperc}%^fg()"
 }
@@ -43,48 +43,37 @@ print_left_bar() {
 }
 
 print_brightness_info() {
-  # TODO
+  br_max=`cat /sys/class/backlight/acpi_video0/max_brightness`
+  br_current=`cat /sys/class/backlight/acpi_video0/actual_brightness`
+  br_perc=$(($br_current * 100 / $br_max))
   echo -n "Brightness: "
-  echo -n "^fg($DZEN_FG2)Unknown^fg()"
+  echo -n "$(echo $br_perc | gdbar ${GDBAR_ARGS[@]}) "
+  echo -n "^fg($DZEN_FG2)${br_perc}%^fg()"
 }
 
 print_battery_info() {
+  # /sys/class/power_supply/BAT0
+  bat_status=`cat /sys/class/power_supply/BAT0/status`
+  bat_current=`cat /sys/class/power_supply/BAT0/charge_now`
+  bat_max=`cat /sys/class/power_supply/BAT0/charge_full`
+  bat_perc=$(($bat_current * 100 / $bat_max))
   echo -n "Battery: "
-  case $battery_status in
-    'F')
-      echo -n "^fg($DZEN_FG2)Full^fg() "
-      ;;
-    'N')
-      echo -n "^fg($DZEN_FG2)Not Present^fg() "
-      ;;
-    'E')
-      echo -n "^fg($DZEN_FG2)Empty^fg() "
-      ;;
-    'C')
-      echo -n "^fg($DZEN_FG2)Charging ($battery_time)^fg() "
-      ;;
-    'D')
-      echo -n "^fg($DZEN_FG2)Discharging ($battery_time)^fg() "
-      ;;
-    *)
-      echo -n "^fg($DZEN_FG2)Unknown^fg() "
-      ;;
-  esac
-  echo -n "$(echo $battery_perc | gdbar -fg $GDBAR_FG -bg $GDBAR_BG -h $GDBAR_H -w $GDBAR_W -s o -ss 1 -sw 2 -nonl) "
-  echo -n "^fg($DZEN_FG2)${battery_perc}%^fg()"
+  echo -n "^fg($DZEN_FG2)$bat_status^fg() "
+  echo -n "$(echo $bat_perc | gdbar ${GDBAR_ARGS[@]}) "
+  echo -n "^fg($DZEN_FG2)$(printf '%3s' $bat_perc)%^fg()"
 }
 
 print_wireless_info() {
   echo -n "WIFI: "
   echo -n "^fg($DZEN_FG2)$wireless_essid^fg() "
-  echo -n "$(echo $wireless_perc | gdbar -fg $GDBAR_FB -bg $GDBAR_BG -h $GDBAR_H -w $GDBAR_W -s o -ss 1 -sw 2 -nonl) "
-  echo -n "^fg($DZEN_FG2)${wireless_perc}%^fg()"
+  echo -n "$(echo $wireless_perc | gdbar ${GDBAR_ARGS[@]}) "
+  echo -n "^fg($DZEN_FG2)$(printf '%3s' $wireless_perc)%^fg()"
 }
   
 
 print_right_bar() {
   while true; do
-    read battery_status battery_perc battery_time wireless_essid wireless_perc
+    read wireless_essid wireless_perc
     print_brightness_info
     print_space
     print_battery_info
@@ -94,5 +83,12 @@ print_right_bar() {
   done
 }
 
-conky -c $CONKYRC_L | print_left_bar | dzen2 -x $DZEN_XPOS_L -y $DZEN_YPOS_L -w $DZEN_W -h $DZEN_H -bg $DZEN_BG -fg $DZEN_FG -fn $DZEN_FONT -ta l -p
-conky -c $CONKYRC_R | print_right_bar | dzen2 -x $DZEN_XPOS_R -y $DZEN_YPOS_R -w $DZEN_W -h $DZEN_H -bg $DZEN_BG -fg $DZEN_FG -fn $DZEN_FONT -ta r -p
+# Disable volume bar for now..
+#
+# conky -c $CONKYRC_L |
+# print_left_bar |
+dzen2 -x $DZEN_XPOS_L -y $DZEN_YPOS_L ${DZEN_ARGS_L[@]} &
+
+conky -c $CONKYRC_R |
+print_right_bar |
+dzen2 -x $DZEN_XPOS_R -y $DZEN_YPOS_R ${DZEN_ARGS_R[@]}

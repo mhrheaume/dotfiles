@@ -6,13 +6,26 @@ export GDBAR_BG="#363636"
 export GDBAR_W=65
 export GDBAR_H=9
 
+GDBAR_ARGS=(-fg $GDBAR_FG -bg $GDBAR_BG -h $GDBAR_H -w $GDBAR_W)
+GDBAR_ARGS=(${GDBAR_ARGS[@]} -s o -ss 1 -sw 2 -nonl)
+export GDBAR_ARGS
+
 export DZEN_FG="#ffffff"
 export DZEN_FG2="#909090"
 export DZEN_BG="#1a1a1a"
-export DZEN_W=960
+export DZEN_W=840
 export DZEN_H=24
 export DZEN_FONT="Monospace-8"
+
+DZEN_ARGS_L=(-w $DZEN_W -h $DZEN_H -bg $DZEN_BG -fg $DZEN_FG)
+DZEN_ARGS_L=(${DZEN_ARGS_L[@]} -fn $DZEN_FONT -ta l -p)
+export DZEN_ARGS_L
+
+DZEN_ARGS_R=(-w $DZEN_W -h $DZEN_H -bg $DZEN_BG -fg $DZEN_FG)
+DZEN_ARGS_R=(${DZEN_ARGS_R[@]} -fn $DZEN_FONT -ta r -p)
+export DZEN_ARGS_R
 
 print_space() {
   echo -n " ^fg($DZEN_FG2)|^fg() "
 }
+
