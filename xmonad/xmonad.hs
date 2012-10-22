@@ -24,6 +24,12 @@ main = do
     } `additionalKeysP` myKeys
 
 -----------------------------------------------------------
+-- Misc
+-----------------------------------------------------------
+
+myConfigRoot = "/home/matt/.xmonad"
+
+-----------------------------------------------------------
 -- Applications
 -----------------------------------------------------------
 
@@ -55,9 +61,9 @@ myWorkspaces  = ["1:dev","2:web","3:chat"]
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
 myWorkspaceBarCmd, myTopBarCmd :: String
-myWorkspaceBarCmd  = "/home/matt/.xmonad/bars/sb_top_l.sh"
-myTopBarCmd        = "/home/matt/.xmonad/bars/sb_top_r.sh"
-myBottomBarCmd     = "/home/matt/.xmonad/bars/sb_bottom.sh"
+myWorkspaceBarCmd  = myConfigRoot ++ "/bars/sb_top_l.sh"
+myTopBarCmd        = myConfigRoot ++ "/bars/sb_top_r.sh"
+myBottomBarCmd     = myConfigRoot ++ "/bars/sb_bottom.sh" 
 
 myLogHook h = dynamicLogWithPP $ defaultPP
   { ppCurrent         = dzenColor myBlue  "" . pad
@@ -82,13 +88,10 @@ myManageHook = (composeAll . concat $
   , [className  =? c  --> doShift (myWorkspaces !! 1) | c <- myWebs   ]
   , [className  =? c  --> doCenterFloat               | c <- myFloats ]
   ])
-
   where
-
     myFloats  = []
     myWebs    = []
     myDev     = []
-
     myIgnores = ["desktop","desktop_window","notify-osd","stalonetray","trayer"]
 
 -----------------------------------------------------------
@@ -102,8 +105,10 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 -----------------------------------------------------------
 
 myKeys :: [(String, X())]
-myKeys = [ ("M-p"     , myDmenuLaunch )
-         , ("M-q"     , myRestart )
+myKeys = [ ("M-p"                     , myDmenuLaunch )
+         , ("M-q"                     , myRestart )
+         , ("<XF86MonBrightnessUp>"   , myBrightnessUp )
+         , ("<XF86MonBrightnessDown>" , myBrightnessDown )
          ]
 
 myDmenuLaunch :: MonadIO m => m ()
@@ -117,6 +122,14 @@ myDmenuLaunch = spawn dmenuCmd
 myRestart :: MonadIO m => m ()
 myRestart = spawn $ killproc ++ " && " ++ xm_recomp ++ " && " ++ xm_reset
   where
-    killproc="killall sb_top_l.sh sb_top_r.sh sb_bottom.sh"
-    xm_recomp="xmonad --recompile"
-    xm_reset="xmonad --restart"
+    killproc  = "killall conky dzen2"
+    xm_recomp = "xmonad --recompile"
+    xm_reset  = "xmonad --restart"
+
+myBrScript   = "/home/matt/.xmonad/misc/change_brightness.sh"
+
+myBrightnessUp :: MonadIO m => m ()
+myBrightnessUp = spawn $ "sudo " ++ myBrScript ++ " up"
+
+myBrightnessDown :: MonadIO m => m ()
+myBrightnessDown = spawn $ "sudo " ++ myBrScript ++ " down"
