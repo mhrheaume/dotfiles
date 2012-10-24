@@ -57,6 +57,17 @@ print_battery_info() {
   bat_current=`cat /sys/class/power_supply/BAT0/charge_now`
   bat_max=`cat /sys/class/power_supply/BAT0/charge_full`
   bat_perc=$(($bat_current * 100 / $bat_max))
+
+  if [[ "$bat_status" == "Unknown" && "$bat_perc" -ge "95" ]]; then
+    # If battery percentage is "Unknown" and greater than 95, it probably
+    # means that the battery is actually full (or at least as full as it will
+    # get). The kernel doesn't do any kind of percentage metrics for
+    # degrading batteries to determine if a battery is full.
+    # 
+    # See acpi_battery_is_charged() in drivers/acpi/battery.c for details.
+    bat_status="Full"
+  fi
+
   echo -n "Battery: "
   echo -n "^fg($DZEN_FG2)$bat_status^fg() "
   echo -n "$(echo $bat_perc | gdbar ${GDBAR_ARGS[@]}) "
