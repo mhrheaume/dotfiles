@@ -26,6 +26,4 @@ esac
 
 if [[ $br_new -le $br_max && $br_new -ge $br_min ]]; then
   echo $br_new > $BACKLIGHT_DIR/brightness
-else
-  echo "Brightness out of range."
 fi
