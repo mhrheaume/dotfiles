@@ -1,11 +1,11 @@
 #!/bin/zsh
 
-source ${HOME}/.xmonad/bars/sb_env
+source $HOME/.xmonad/bars/sb_env
 
-DZEN_XPOS=840
+DZEN_XPOS=$DZEN_W
 DZEN_YPOS=0
 
-CONKYRC="${HOME}/.xmonad/conky/conkyrc_top"
+CONKYRC="$HOME/.xmonad/conky/conkyrc_top"
 
 print_cpu_info() {
   echo -n "CPU: ^fg($DZEN_FG2)${cpufreq}GHz^fg() "

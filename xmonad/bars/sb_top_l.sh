@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source ${HOME}/.xmonad/bars/sb_env
+source $HOME/.xmonad/bars/sb_env
 
 DZEN_XPOS=0
 DZEN_YPOS=0

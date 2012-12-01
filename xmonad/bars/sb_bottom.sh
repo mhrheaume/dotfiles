@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source ${HOME}/.xmonad/bars/sb_env
+source $HOME/.xmonad/bars/sb_env
 
 # Left dzen bar
 DZEN_XPOS_L=0
@@ -9,8 +9,8 @@ DZEN_YPOS_L=1026
 DZEN_XPOS_R=840
 DZEN_YPOS_R=1026
 
-CONKYRC_L="${HOME}/.xmonad/conky/conkyrc_bl"
-CONKYRC_R="${HOME}/.xmonad/conky/conkyrc_br"
+CONKYRC_L="$HOME/.xmonad/conky/conkyrc_bl"
+CONKYRC_R="$HOME/.xmonad/conky/conkyrc_br"
 
 print_vol_info() {
   volperc=$(amixer get Master | grep "Mono:" | awk '{print $4}' | tr -d '[]%')
@@ -21,7 +21,7 @@ print_vol_info() {
   else
     echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
   fi
-  echo -n "^fg($DZEN_FG2)${volperc}%^fg()"
+  echo -n "^fg($DZEN_FG2)$volperc%^fg()"
 }
 
 print_xmms2_info() {
@@ -48,7 +48,7 @@ print_brightness_info() {
   br_perc=$(($br_current * 100 / $br_max))
   echo -n "Brightness: "
   echo -n "$(echo $br_perc | gdbar ${GDBAR_ARGS[@]}) "
-  echo -n "^fg($DZEN_FG2)${br_perc}%^fg()"
+  echo -n "^fg($DZEN_FG2)$br_perc%^fg()"
 }
 
 print_battery_info() {
