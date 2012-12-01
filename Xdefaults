@@ -1,11 +1,13 @@
+Xcursor.theme: Chameleon-Pearl-Regular
+
 ! Xft
 Xft*dpi:                96
 Xft*antialias:          True
 Xft*Hinting:            Full
 
 ! URxvt
-URxvt*font:             xft:DejaVu Sans Mono:pixelsize=9
-URxvt*boldFont:         xft:DejaVu Sans Mono:pixelsize=9
+URxvt*font:             xft:DejaVu Sans Mono:pixelsize=10
+URxvt*boldFont:         xft:DejaVu Sans Mono:pixelsize=10
 URxvt*scrollBar:        false
 URxvt*scrollBar_right:  false
 URxvt*depth:            32
