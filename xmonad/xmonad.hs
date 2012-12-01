@@ -1,11 +1,12 @@
 import XMonad
-import XMonad.Util.EZConfig
-import XMonad.Util.Run
+import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutHints
+import XMonad.Util.EZConfig
+import XMonad.Util.Run
 
 main = do
   myWorkspaceBar  <- spawnPipe myWorkspaceBarCmd
@@ -56,7 +57,7 @@ myColorFocusedBorder  = myBlue
 -----------------------------------------------------------
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces  = ["1:dev","2:web","3:chat"]
+myWorkspaces  = ["1:dev","2:web","3:chat","4:virt"]
 
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
@@ -81,17 +82,33 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -- ManageHook
 -----------------------------------------------------------
 
+myDevManageHook :: ManageHook
+myDevManageHook = doShift (myWorkspaces !! 0)
+
+myWebManageHook :: ManageHook
+myWebManageHook = doShift (myWorkspaces !! 1)
+
+myChatManageHook :: ManageHook
+myChatManageHook = doShift (myWorkspaces !! 2)
+
+myVirtManageHook :: ManageHook
+myVirtManageHook = doShift (myWorkspaces !! 3) <+> doCenterFloat
+
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
-  [ [resource   =? r  --> doIgnore                    | r <- myIgnores]
-  , [className  =? c  --> doShift (myWorkspaces !! 0) | c <- myDev    ]
-  , [className  =? c  --> doShift (myWorkspaces !! 1) | c <- myWebs   ]
-  , [className  =? c  --> doCenterFloat               | c <- myFloats ]
+  [ [resource   =? r  --> doIgnore          | r <- myIgnores]
+  , [className  =? c  --> myDevManageHook   | c <- myDevs   ]
+  , [className  =? c  --> myWebManageHook   | c <- myWebs   ]
+  , [title      =? t  --> myChatManageHook  | t <- myChats  ]
+  , [className  =? c  --> myVirtManageHook  | c <- myVirts  ]
+  , [className  =? c  --> doCenterFloat     | c <- myFloats ]
   ])
   where
     myFloats  = []
-    myWebs    = []
-    myDev     = []
+    myDevs    = []
+    myWebs    = ["uzbl-core","Uzbl-core"]
+    myChats   = ["irssi"]
+    myVirts   = ["qemu-system-i386","qemu-system-x86_64","qemu-system-arm"]
     myIgnores = ["desktop","desktop_window","notify-osd","stalonetray","trayer"]
 
 -----------------------------------------------------------
@@ -106,12 +123,15 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 
 myKeys :: [(String, X())]
 myKeys = [ ("M-p"                     , myDmenuLaunch )
+         , ("M-b"                     , myUzblLaunch )
+         , ("M-i"                     , myIrssiLaunch )
          , ("M-q"                     , myRestart )
+         , ("M-r"                     , myCenterWindow )
          , ("<XF86MonBrightnessUp>"   , myBrightnessUp )
          , ("<XF86MonBrightnessDown>" , myBrightnessDown )
          ]
 
-myDmenuLaunch :: MonadIO m => m ()
+myDmenuLaunch :: MonadIO m => m()
 myDmenuLaunch = spawn dmenuCmd
   where
     nc = "-nf '" ++ myGray ++ "' -nb '" ++ mySlate ++ "'"
@@ -119,17 +139,27 @@ myDmenuLaunch = spawn dmenuCmd
     fn = "-fn 'Monospace-8'"
     dmenuCmd = "dmenu_run -b -i " ++ nc ++ " " ++ sc ++ " " ++ fn
 
-myRestart :: MonadIO m => m ()
+myUzblLaunch :: MonadIO m => m ()
+myUzblLaunch = spawn "uzbl-browser"
+
+myIrssiLaunch :: X()
+myIrssiLaunch = runInTerm "-title irssi" "irssi"
+
+myRestart :: MonadIO m => m()
 myRestart = spawn $ killproc ++ " && " ++ xm_recomp ++ " && " ++ xm_reset
   where
     killproc  = "killall conky dzen2"
     xm_recomp = "xmonad --recompile"
     xm_reset  = "xmonad --restart"
 
+myCenterWindow :: X()
+myCenterWindow = withFocused $ keysMoveWindowTo (840,525) (1/2,1/2)
+
+myBrScript :: String
 myBrScript   = "/home/matt/.xmonad/misc/change_brightness.sh"
 
-myBrightnessUp :: MonadIO m => m ()
+myBrightnessUp :: MonadIO m => m()
 myBrightnessUp = spawn $ "sudo " ++ myBrScript ++ " up"
 
-myBrightnessDown :: MonadIO m => m ()
+myBrightnessDown :: MonadIO m => m()
 myBrightnessDown = spawn $ "sudo " ++ myBrScript ++ " down"
