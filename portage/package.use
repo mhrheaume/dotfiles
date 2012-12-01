@@ -1,3 +1,8 @@
 x11-base/xorg-server udev
 dev-vcs/git -perl -python
 app-admin/conky -ncurses
+media-libs/imlib2 jpeg
+app-emulation/qemu sdl virtfs xattr -alsa -bluetooth -caps -curl -ncurses -vhost-net -vnc
+media-libs/libsdl -alsa -audio -joystick
+dev-libs/libxml2 python
+app-portage/layman git

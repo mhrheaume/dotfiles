@@ -3,3 +3,6 @@ x11-wm/xmonad-contrib ~amd64
 dev-haskell/syb ~amd64
 dev-haskell/x11 ~amd64
 dev-haskell/x11-xft ~amd64
+www-client/uzbl ~amd64
+x11-themes/chameleon-xcursors ~amd64
+*/*::local
