@@ -57,7 +57,7 @@ myColorFocusedBorder  = myBlue
 -----------------------------------------------------------
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces  = ["1:dev","2:web","3:chat","4:virt"]
+myWorkspaces  = ["1:term1","2:term2","3:web","4:chat","5:virt"]
 
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
@@ -82,9 +82,6 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -- ManageHook
 -----------------------------------------------------------
 
-myDevManageHook :: ManageHook
-myDevManageHook = doShift (myWorkspaces !! 0)
-
 myWebManageHook :: ManageHook
 myWebManageHook = doShift (myWorkspaces !! 1)
 
@@ -97,7 +94,6 @@ myVirtManageHook = doShift (myWorkspaces !! 3) <+> doCenterFloat
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
   [ [resource   =? r  --> doIgnore          | r <- myIgnores]
-  , [className  =? c  --> myDevManageHook   | c <- myDevs   ]
   , [className  =? c  --> myWebManageHook   | c <- myWebs   ]
   , [title      =? t  --> myChatManageHook  | t <- myChats  ]
   , [className  =? c  --> myVirtManageHook  | c <- myVirts  ]
@@ -105,7 +101,6 @@ myManageHook = (composeAll . concat $
   ])
   where
     myFloats  = []
-    myDevs    = []
     myWebs    = ["uzbl-core","Uzbl-core"]
     myChats   = ["irssi"]
     myVirts   = ["qemu-system-i386","qemu-system-x86_64","qemu-system-arm"]
