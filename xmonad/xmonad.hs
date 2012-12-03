@@ -83,13 +83,13 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -----------------------------------------------------------
 
 myWebManageHook :: ManageHook
-myWebManageHook = doShift (myWorkspaces !! 1)
+myWebManageHook = doShift (myWorkspaces !! 2)
 
 myChatManageHook :: ManageHook
-myChatManageHook = doShift (myWorkspaces !! 2)
+myChatManageHook = doShift (myWorkspaces !! 3)
 
 myVirtManageHook :: ManageHook
-myVirtManageHook = doShift (myWorkspaces !! 3) <+> doCenterFloat
+myVirtManageHook = doShift (myWorkspaces !! 4) <+> doCenterFloat
 
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
