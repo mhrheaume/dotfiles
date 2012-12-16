@@ -13,7 +13,7 @@ export GDBAR_ARGS
 export DZEN_FG="#ffffff"
 export DZEN_FG2="#909090"
 export DZEN_BG="#1a1a1a"
-export DZEN_W=840
+export DZEN_W=$(( $($HOME/.xmonad/misc/query_xres.sh x) / 2 ))
 export DZEN_H=24
 export DZEN_FONT="Monospace-8"
 

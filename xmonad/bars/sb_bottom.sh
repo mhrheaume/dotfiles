@@ -4,10 +4,9 @@ source $HOME/.xmonad/bars/sb_env
 
 # Left dzen bar
 DZEN_XPOS_L=0
-DZEN_YPOS_L=1026
+DZEN_YPOS=$(( $($HOME/.xmonad/misc/query_xres.sh y) - $DZEN_H ))
 # Right dzen bar
-DZEN_XPOS_R=840
-DZEN_YPOS_R=1026
+DZEN_XPOS_R=$DZEN_W
 
 CONKYRC_L="$HOME/.xmonad/conky/conkyrc_bl"
 CONKYRC_R="$HOME/.xmonad/conky/conkyrc_br"
@@ -98,8 +97,8 @@ print_right_bar() {
 #
 # conky -c $CONKYRC_L |
 # print_left_bar |
-dzen2 -x $DZEN_XPOS_L -y $DZEN_YPOS_L ${DZEN_ARGS_L[@]} &
+dzen2 -x $DZEN_XPOS_L -y $DZEN_YPOS ${DZEN_ARGS_L[@]} &
 
 conky -c $CONKYRC_R |
 print_right_bar |
-dzen2 -x $DZEN_XPOS_R -y $DZEN_YPOS_R ${DZEN_ARGS_R[@]}
+dzen2 -x $DZEN_XPOS_R -y $DZEN_YPOS ${DZEN_ARGS_R[@]}
