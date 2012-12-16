@@ -101,7 +101,7 @@ myManageHook = (composeAll . concat $
   ])
   where
     myFloats  = []
-    myWebs    = ["uzbl-core","Uzbl-core"]
+    myWebs    = ["uzbl-core","Uzbl-core", "uzbl-tabbed", "Uzbl-tabbed"]
     myChats   = ["irssi"]
     myVirts   = ["qemu-system-i386","qemu-system-x86_64","qemu-system-arm"]
     myIgnores = ["desktop","desktop_window","notify-osd","stalonetray","trayer"]
@@ -118,7 +118,8 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 
 myKeys :: [(String, X())]
 myKeys = [ ("M-p"                     , myDmenuLaunch )
-         , ("M-b"                     , myUzblLaunch )
+         , ("M-b"                     , myUzblTabbedLaunch )
+         , ("M-S-b"                   , myUzblLaunch )
          , ("M-i"                     , myIrssiLaunch )
          , ("M-q"                     , myRestart )
          , ("M-r"                     , myCenterWindow )
@@ -136,6 +137,9 @@ myDmenuLaunch = spawn dmenuCmd
 
 myUzblLaunch :: MonadIO m => m ()
 myUzblLaunch = spawn "uzbl-browser"
+
+myUzblTabbedLaunch :: MonadIO m => m ()
+myUzblTabbedLaunch = spawn "uzbl-tabbed"
 
 myIrssiLaunch :: X()
 myIrssiLaunch = runInTerm "-title irssi" "irssi"
