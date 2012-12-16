@@ -42,8 +42,8 @@ print_left_bar() {
 }
 
 print_brightness_info() {
-  br_max=`cat /sys/class/backlight/acpi_video0/max_brightness`
-  br_current=`cat /sys/class/backlight/acpi_video0/actual_brightness`
+  br_max=$(cat /sys/class/backlight/acpi_video0/max_brightness)
+  br_current=$(cat /sys/class/backlight/acpi_video0/actual_brightness)
   br_perc=$(($br_current * 100 / $br_max))
   echo -n "Brightness: "
   echo -n "$(echo $br_perc | gdbar ${GDBAR_ARGS[@]}) "
@@ -52,9 +52,9 @@ print_brightness_info() {
 
 print_battery_info() {
   # /sys/class/power_supply/BAT0
-  bat_status=`cat /sys/class/power_supply/BAT0/status`
-  bat_current=`cat /sys/class/power_supply/BAT0/charge_now`
-  bat_max=`cat /sys/class/power_supply/BAT0/charge_full`
+  bat_status=$(cat /sys/class/power_supply/BAT0/status)
+  bat_current=$(cat /sys/class/power_supply/BAT0/charge_now)
+  bat_max=$(cat /sys/class/power_supply/BAT0/charge_full)
   bat_perc=$(($bat_current * 100 / $bat_max))
 
   if [[ "$bat_status" == "Unknown" && "$bat_perc" -ge "95" ]]; then

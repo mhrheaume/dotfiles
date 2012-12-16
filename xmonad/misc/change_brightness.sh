@@ -8,8 +8,8 @@
 BACKLIGHT_DIR=/sys/class/backlight/acpi_video0
 
 br_min=0
-br_max=`cat ${BACKLIGHT_DIR}/max_brightness`
-br_current=`cat ${BACKLIGHT_DIR}/actual_brightness`
+br_max=$(cat ${BACKLIGHT_DIR}/max_brightness)
+br_current=$(cat ${BACKLIGHT_DIR}/actual_brightness)
 
 case $1 in
 "down")
