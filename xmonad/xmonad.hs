@@ -123,8 +123,6 @@ myKeys = [ ("M-p"                     , myDmenuLaunch )
          , ("M-i"                     , myIrssiLaunch )
          , ("M-q"                     , myRestart )
          , ("M-r"                     , myCenterWindow )
-         , ("<XF86MonBrightnessUp>"   , myBrightnessUp )
-         , ("<XF86MonBrightnessDown>" , myBrightnessDown )
          ]
 
 myDmenuLaunch :: MonadIO m => m()
@@ -153,12 +151,3 @@ myRestart = spawn $ killproc ++ " && " ++ xm_recomp ++ " && " ++ xm_reset
 
 myCenterWindow :: X()
 myCenterWindow = withFocused $ keysMoveWindowTo (840,525) (1/2,1/2)
-
-myBrScript :: String
-myBrScript   = "/home/matt/.xmonad/misc/change_brightness.sh"
-
-myBrightnessUp :: MonadIO m => m()
-myBrightnessUp = spawn $ "sudo " ++ myBrScript ++ " up"
-
-myBrightnessDown :: MonadIO m => m()
-myBrightnessDown = spawn $ "sudo " ++ myBrScript ++ " down"
