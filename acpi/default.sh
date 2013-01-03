@@ -30,8 +30,13 @@ case "$group" in
 			#	xset dpms force off
 			#	;;
 			lid)
-				/usr/sbin/pm-suspend --quirk-vbe-post &
-				DISPLAY=:0.0 su -c -l matt /usr/bin/slimlock
+				case "$id" in
+					close)
+						/usr/sbin/pm-suspend --quirk-vbe-post &
+						DISPLAY=:0.0 su -c -l matt /usr/bin/slimlock
+						;;
+					*)	log_unhandled $* ;;
+				esac
 				;;
 
 			*)	log_unhandled $* ;;
