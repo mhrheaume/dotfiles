@@ -51,31 +51,51 @@ print_brightness_info() {
 }
 
 print_battery_info() {
-  # /sys/class/power_supply/BAT0
-  bat_status=$(cat /sys/class/power_supply/BAT0/status)
-  bat_current=$(cat /sys/class/power_supply/BAT0/charge_now)
-  bat_max=$(cat /sys/class/power_supply/BAT0/charge_full)
-  bat_perc=$(($bat_current * 100 / $bat_max))
+  case "$battery_status" in
+    "U")
+      battery_status="Unknown"
+      ;;
+    "F")
+      battery_status="Full"
+      ;;
+    "C")
+      battery_status="Charging"
+      ;;
+    "D")
+      battery_status="Discharging"
+      ;;
+    "N")
+      battery_status="Not Present"
+      ;;
+    "E")
+      battery_status="Empty"
+      ;;
+  esac
 
-  if [[ "$bat_status" == "Unknown" && "$bat_perc" -ge "95" ]]; then
+  # String trailing '%' from battery percentage
+  battery_percent=$(echo $battery_percent | sed -e 's/\(^.*\)\(.$\)/\1/')
+
+  if [[ "$battery_status" == "Unknown" && "$battery_percent" -ge "95" ]]; then
     # If battery percentage is "Unknown" and greater than 95, it probably
     # means that the battery is actually full (or at least as full as it will
     # get). The kernel doesn't do any kind of percentage metrics for
     # degrading batteries to determine if a battery is full.
     # 
     # See acpi_battery_is_charged() in drivers/acpi/battery.c for details.
-    bat_status="Full"
+    battery_status="Full"
   fi
 
   echo -n "Battery: "
-  echo -n "^fg($DZEN_FG2)$bat_status^fg() "
-  echo -n "$(echo $bat_perc | gdbar ${GDBAR_ARGS[@]}) "
-  echo -n "^fg($DZEN_FG2)$(printf '%3s' $bat_perc)%^fg()"
+  echo -n "^fg($DZEN_FG2)$battery_status^fg() "
+  echo -n "$(echo $battery_percent | gdbar ${GDBAR_ARGS[@]}) "
+  echo -n "^fg($DZEN_FG2)$(printf '%3s' $battery_percent)%^fg()"
 }
 
 print_wireless_info() {
   echo -n "WIFI: "
   echo -n "^fg($DZEN_FG2)$wireless_essid^fg() "
+
+  if [[ "$wireless_perc" == "unk" ]]; then; wireless_perc="0"; fi
   echo -n "$(echo $wireless_perc | gdbar ${GDBAR_ARGS[@]}) "
   echo -n "^fg($DZEN_FG2)$(printf '%3s' $wireless_perc)%^fg()"
 }
@@ -83,7 +103,7 @@ print_wireless_info() {
 
 print_right_bar() {
   while true; do
-    read wireless_essid wireless_perc
+    read battery_status battery_percent wireless_perc wireless_essid
     print_brightness_info
     print_space
     print_battery_info

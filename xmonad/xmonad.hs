@@ -40,7 +40,7 @@ myTerminal    = "urxvt -b 0"
 -- Appearance
 -----------------------------------------------------------
 
-myWhite, mySlate, myGray, myRed, myBlue :: String
+myWhite, mySlate, myGray, myDarkGray, myRed, myBlue :: String
 myWhite     = "#ffffff"
 mySlate     = "#1a1a1a"
 myGray      = "#909090"
@@ -61,7 +61,7 @@ myWorkspaces  = ["1:term1","2:term2","3:web","4:chat","5:virt"]
 
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
-myWorkspaceBarCmd, myTopBarCmd :: String
+myWorkspaceBarCmd, myTopBarCmd, myBottomBarCmd :: String
 myWorkspaceBarCmd  = myConfigRoot ++ "/bars/sb_top_l.sh"
 myTopBarCmd        = myConfigRoot ++ "/bars/sb_top_r.sh"
 myBottomBarCmd     = myConfigRoot ++ "/bars/sb_bottom.sh" 
@@ -101,7 +101,7 @@ myManageHook = (composeAll . concat $
   ])
   where
     myFloats  = []
-    myWebs    = ["uzbl-core","Uzbl-core", "uzbl-tabbed", "Uzbl-tabbed"]
+    myWebs    = ["luakit"]
     myChats   = ["irssi"]
     myVirts   = ["qemu-system-i386","qemu-system-x86_64","qemu-system-arm"]
     myIgnores = ["desktop","desktop_window","notify-osd","stalonetray","trayer"]
@@ -118,8 +118,7 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 
 myKeys :: [(String, X())]
 myKeys = [ ("M-p"                     , myDmenuLaunch )
-         , ("M-b"                     , myUzblTabbedLaunch )
-         , ("M-S-b"                   , myUzblLaunch )
+         , ("M-b"                     , myLuakitLaunch )
          , ("M-i"                     , myIrssiLaunch )
          , ("M-q"                     , myRestart )
          , ("M-r"                     , myCenterWindow )
@@ -133,17 +132,14 @@ myDmenuLaunch = spawn dmenuCmd
     fn = "-fn 'Monospace-8'"
     dmenuCmd = "dmenu_run -b -i " ++ nc ++ " " ++ sc ++ " " ++ fn
 
-myUzblLaunch :: MonadIO m => m ()
-myUzblLaunch = spawn "uzbl-browser"
-
-myUzblTabbedLaunch :: MonadIO m => m ()
-myUzblTabbedLaunch = spawn "uzbl-tabbed"
+myLuakitLaunch :: MonadIO m => m ()
+myLuakitLaunch = spawn "luakit"
 
 myIrssiLaunch :: X()
 myIrssiLaunch = runInTerm "-title irssi" "irssi"
 
 myRestart :: MonadIO m => m()
-myRestart = spawn $ killproc ++ " && " ++ xm_recomp ++ " && " ++ xm_reset
+myRestart = spawn $ killproc ++ "; " ++ xm_recomp ++ " && " ++ xm_reset
   where
     killproc  = "killall conky dzen2"
     xm_recomp = "xmonad --recompile"

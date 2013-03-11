@@ -6,4 +6,8 @@ out_to_console yes
 update_interval 2
 
 TEXT
-${wireless_essid wlan0} ${wireless_link_qual_perc wlan0}
+${if_match "${battery_short}" == "F"}F 100%${else}
+${if_match "${battery_short}" == "U"}U 0%${else}
+${battery_short}${endif}${endif} \
+\
+${wireless_link_qual_perc wlan0} ${wireless_essid wlan0}
