@@ -32,15 +32,15 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set expandtab
+"set expandtab
 set shiftwidth=4
 set tabstop=4
 set smarttab
 set autoindent
 set smartindent
 
-set lcs=tab:>-
-set list!
+set listchars=tab:>-
+set list
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Searching
@@ -62,6 +62,10 @@ noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
 
+" Easier navigation for wrapped lines
+nmap j gj
+nmap k gk
+
 nmap <leader>n :bnext<CR>
 nmap <leader>p :bprev<CR>
 
@@ -72,11 +76,9 @@ nmap <leader>l <C-w>l
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>d :NERDTreeToggle<CR>
-nmap <leader>s :ConqueTerm bash<CR>
-nmap <leader>sh :ConqueTermSplit zsh<CR>
-nmap <leader>sv :ConqueTermVSplit zsh<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Overrides
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufRead,BufNewFile $RT/* set tabstop=2 shiftwidth=2
+" autocmd BufRead,BufNewFile $CS452/* set tabstop=2 shiftwidth=2
+" autocmd BufRead,BufNewFile $CS444/* set noexpandtab
