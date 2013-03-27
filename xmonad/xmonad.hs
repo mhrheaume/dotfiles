@@ -11,7 +11,7 @@ import XMonad.Util.Run
 main = do
   myWorkspaceBar  <- spawnPipe myWorkspaceBarCmd
   myTopBar        <- spawnPipe myTopBarCmd
-  myBottomBar     <- spawnPipe myBottomBarCmd
+  -- myBottomBar     <- spawnPipe myBottomBarCmd
   xmonad $ myUrgencyHook $ defaultConfig
     { terminal            = myTerminal
     , workspaces          = myWorkspaces
@@ -117,12 +117,15 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 -----------------------------------------------------------
 
 myKeys :: [(String, X())]
-myKeys = [ ("M-p"                     , myDmenuLaunch )
-         , ("M-b"                     , myLuakitLaunch )
-         , ("M-i"                     , myIrssiLaunch )
-         , ("M-q"                     , myRestart )
-         , ("M-r"                     , myCenterWindow )
-         ]
+myKeys =
+    [ ("M-p", myDmenuLaunch )
+    , ("M-b", myLuakitLaunch )
+    , ("M-i", myIrssiLaunch )
+    , ("M-q", myRestart )
+    , ("M-S-=", spawn "amixer set Master 2+")
+    , ("M-=", spawn "amixer set Master 2-")
+    , ("M--", spawn "mpc toggle")
+    ]
 
 myDmenuLaunch :: MonadIO m => m()
 myDmenuLaunch = spawn dmenuCmd
@@ -144,6 +147,3 @@ myRestart = spawn $ killproc ++ "; " ++ xm_recomp ++ " && " ++ xm_reset
     killproc  = "killall conky dzen2"
     xm_recomp = "xmonad --recompile"
     xm_reset  = "xmonad --restart"
-
-myCenterWindow :: X()
-myCenterWindow = withFocused $ keysMoveWindowTo (840,525) (1/2,1/2)

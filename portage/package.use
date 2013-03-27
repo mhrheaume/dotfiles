@@ -1,8 +1,13 @@
-x11-base/xorg-server udev
 dev-vcs/git -perl -python
 app-admin/conky -ncurses
-media-libs/imlib2 jpeg
+dev-libs/libxml2 python
+x11-wm/xmonad -default-term
+media-libs/imlib2 jpeg X
+net-libs/webkit-gtk -geoloc -introspection
+X11-libs/cairo X
+dev-java/icedtea-bin -alsa -X
+app-text/poppler cairo
+media-sound/mpd lame
 app-emulation/qemu sdl virtfs xattr -alsa -bluetooth -caps -curl -ncurses -vhost-net -vnc
 media-libs/libsdl -alsa -audio -joystick
-dev-libs/libxml2 python
 app-portage/layman git
