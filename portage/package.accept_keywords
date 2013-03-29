@@ -1,2 +1,7 @@
 x11-themes/chameleon-xcursors ~amd64
 www-client/luakit ~amd64
+dev-libs/boost ~amd64
+dev-util/boost-build ~amd64
+app-arch/snappy ~amd64
+dev-db/mongodb ~amd64
+net-libs/nodejs ~amd64

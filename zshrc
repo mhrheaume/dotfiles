@@ -6,6 +6,8 @@ export HISTFILE=~/.zhistory
 
 setopt inc_append_history
 
+set -o vi
+
 # Tab Completion
 autoload -U compinit
 compinit
