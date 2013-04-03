@@ -41,15 +41,6 @@ print_left_bar() {
   done
 }
 
-print_brightness_info() {
-  br_max=$(cat /sys/class/backlight/acpi_video0/max_brightness)
-  br_current=$(cat /sys/class/backlight/acpi_video0/actual_brightness)
-  br_perc=$(($br_current * 100 / $br_max))
-  echo -n "Brightness: "
-  echo -n "$(echo $br_perc | gdbar ${GDBAR_ARGS[@]}) "
-  echo -n "^fg($DZEN_FG2)$br_perc%^fg()"
-}
-
 print_battery_info() {
   case "$battery_status" in
     "U")
@@ -104,8 +95,6 @@ print_wireless_info() {
 print_right_bar() {
   while true; do
     read battery_status battery_percent wireless_perc wireless_essid
-    print_brightness_info
-    print_space
     print_battery_info
     print_space
     print_wireless_info

@@ -53,9 +53,18 @@ case "$group" in
 			#	cpufreq-set -g powersave
 			#	;;
 			*0)
-				xset +dpms
-				xset dpms 60 60 60
 				echo -n 0 > $bl_device/brightness
+				
+				echo 1500 > /proc/sys/vm/dirty_writeback_centisecs
+				for file in /sys/class/scsi_host/*; do
+					echo min_power > $file/link_power_management_policy
+				done
+
+				ethtool -s eth0 wol d
+				iwconfig wlan0 power on
+				iwconfig wlan0 power timeout 500ms
+
+				echo 1 > /sys/module/snd_hda_intel/parameters/power_save
 				;;
 
 			# Add code here to handle when the system is plugged in
@@ -66,32 +75,40 @@ case "$group" in
 			#	cpufreq-set -g performance
 			#	;;
 			*1)
-				xset +dpms
-				xset dpms 600 600 600
 				echo -n $bl_max > $bl_device/brightness
+
+				echo 500 > /proc/sys/vm/dirty_writeback_centisecs
+				for file in /sys/class/scsi_host/*; do
+					echo max_performance > $file/link_power_management_policy
+				done
+
+				ethtool -s eth0 wol g
+				iwconfig wlan0 power off
+
+				echo 0 > /sys/module/snd_hda_intel/parameters/power_save
 				;;
 
 			*)	log_unhandled $* ;;
 		esac
 		;;
 
-	video)
-		case "$action" in
-			brightnessup)
-				bl_new=$(($(cat $bl_device/brightness) + 1))
-				if [[ $bl_new -le $bl_max ]]; then
-					echo -n $bl_new > $bl_device/brightness
-				fi
-				;;
-			brightnessdown)
-				bl_new=$(($(cat $bl_device/brightness) - 1))
-				if [[ $bl_new -ge 0 ]]; then
-					echo -n $bl_new > $bl_device/brightness
-				fi
-				;;
-			*)	log_unhandled $* ;;
-		esac
-		;;
+#	video)
+#		case "$action" in
+#			brightnessup)
+#				bl_new=$(($(cat $bl_device/brightness) + 1))
+#				if [[ $bl_new -le $bl_max ]]; then
+#					echo -n $bl_new > $bl_device/brightness
+#				fi
+#				;;
+#			brightnessdown)
+#				bl_new=$(($(cat $bl_device/brightness) - 1))
+#				if [[ $bl_new -ge 0 ]]; then
+#					echo -n $bl_new > $bl_device/brightness
+#				fi
+#				;;
+#			*)	log_unhandled $* ;;
+#		esac
+#		;;
 
 	*)	log_unhandled $* ;;
 esac
