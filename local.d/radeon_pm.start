@@ -1,2 +1,0 @@
-# Set radeon power management to "mid" profile
-echo mid > /sys/class/drm/card0/device/power_profile

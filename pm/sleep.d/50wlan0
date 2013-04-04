@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+case "$1" in
+hibernate|suspend)
+  /etc/init.d/net.wlan0 stop
+  ;;
+thaw|resume)
+  /etc/init.d/net.wlan0 start
+  ;;
+*)
+  exit $NA
+  ;;
+esac
