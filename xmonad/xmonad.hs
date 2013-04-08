@@ -7,6 +7,8 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutHints
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
+import Graphics.X11.ExtraTypes.XF86
+import qualified Data.Map as M
 
 main = do
   myWorkspaceBar  <- spawnPipe myWorkspaceBarCmd
@@ -22,7 +24,7 @@ main = do
     , focusedBorderColor  = myColorFocusedBorder
     , modMask             = mod4Mask
     , borderWidth         = 1
-    } `additionalKeysP` myKeys
+    } `additionalKeys` myKeys
 
 -----------------------------------------------------------
 -- Misc
@@ -116,15 +118,17 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 -- KeyBindings
 -----------------------------------------------------------
 
-myKeys :: [(String, X())]
+myKeys :: [((ButtonMask, KeySym), X ())]
 myKeys =
-    [ ("M-p", myDmenuLaunch )
-    , ("M-b", myLuakitLaunch )
-    , ("M-i", myIrssiLaunch )
-    , ("M-q", myRestart )
-    , ("M-S-=", spawn "amixer set Master 2+")
-    , ("M-=", spawn "amixer set Master 2-")
-    , ("M--", spawn "mpc toggle")
+    [ ((mod4Mask, xK_p), myDmenuLaunch)
+    , ((mod4Mask, xK_q), myRestart)
+    , ((mod4Mask, xK_i), runInTerm "-title irssi" "irssi")
+    , ((mod4Mask, xK_b), spawn "luakit")
+    , ((mod4Mask .|. shiftMask, xK_equal), spawn "amixer set Master 2+")
+    , ((mod4Mask, xK_equal), spawn "amixer set Master 2-")
+    , ((mod4Mask, xK_minus), spawn "mpc toggle")
+    , ((0, xF86XK_MonBrightnessUp), spawn "/usr/local/bin/xbbar")
+    , ((0, xF86XK_MonBrightnessDown), spawn "/usr/local/bin/xbbar")
     ]
 
 myDmenuLaunch :: MonadIO m => m()
@@ -134,12 +138,6 @@ myDmenuLaunch = spawn dmenuCmd
     sc = "-sf '" ++ myBlue ++ "' -sb '" ++ mySlate ++ "'"
     fn = "-fn 'Monospace-8'"
     dmenuCmd = "dmenu_run -b -i " ++ nc ++ " " ++ sc ++ " " ++ fn
-
-myLuakitLaunch :: MonadIO m => m ()
-myLuakitLaunch = spawn "luakit"
-
-myIrssiLaunch :: X()
-myIrssiLaunch = runInTerm "-title irssi" "irssi"
 
 myRestart :: MonadIO m => m()
 myRestart = spawn $ killproc ++ "; " ++ xm_recomp ++ " && " ++ xm_reset
