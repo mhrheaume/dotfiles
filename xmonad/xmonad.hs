@@ -7,7 +7,12 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutHints
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
+
 import Graphics.X11.ExtraTypes.XF86
+import System.Exit;
+
+import qualified XMonad.StackSet as W
+import qualified Data.Map as M
 
 main = do
 	myWorkspaceBar <- spawnPipe myWorkspaceBarCmd
@@ -22,8 +27,9 @@ main = do
 		, normalBorderColor   = myColorNormalBorder
 		, focusedBorderColor  = myColorFocusedBorder
 		, modMask             = mod4Mask
+		, keys                = myKeys
 		, borderWidth         = 1
-		} `additionalKeys` myKeys
+		}
 
 -----------------------------------------------------------
 -- Misc
@@ -117,18 +123,40 @@ myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
 -- KeyBindings
 -----------------------------------------------------------
 
-myKeys :: [((ButtonMask, KeySym), X ())]
-myKeys =
-	[ ((mod4Mask, xK_p), myDmenuLaunch)
-	, ((mod4Mask, xK_q), myRestart)
-	, ((mod4Mask, xK_i), runInTerm "-title irssi" "irssi")
-	, ((mod4Mask, xK_b), spawn "luakit")
-	, ((mod4Mask .|. shiftMask, xK_equal), spawn "amixer set Master 2+")
-	, ((mod4Mask, xK_equal), spawn "amixer set Master 2-")
-	, ((mod4Mask, xK_minus), spawn "mpc toggle")
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
+myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+	-- XMonad
+	[ ((modMask .|. shiftMask, xK_q), io (exitWith ExitSuccess))
+	, ((modMask, xK_q), myRestart)
+	, ((modMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+	-- Window Management
+	, ((modMask .|. shiftMask, xK_c), kill)
+	, ((modMask, xK_j), windows W.focusDown)
+	, ((modMask, xK_k), windows W.focusUp)
+	, ((modMask, xK_a), windows W.focusMaster)
+	, ((modMask .|. shiftMask, xK_j), windows W.swapDown)
+	, ((modMask .|. shiftMask, xK_k), windows W.swapUp)
+	, ((modMask .|. shiftMask, xK_a), windows W.swapMaster)
+	, ((modMask, xK_Return), windows W.swapMaster)
+	, ((modMask, xK_comma), sendMessage (IncMasterN 1))
+	, ((modMask, xK_period), sendMessage (IncMasterN (-1)))
+	-- Layout
+	, ((modMask, xK_space), sendMessage NextLayout)
+	-- Scripts / Launchers
+	, ((modMask, xK_p), myDmenuLaunch)
+	, ((modMask, xK_i), runInTerm "-title irssi" "irssi")
+	, ((modMask, xK_b), spawn "luakit")
+	, ((modMask .|. shiftMask, xK_equal), spawn "amixer set Master 2+")
+	, ((modMask, xK_equal), spawn "amixer set Master 2-")
+	, ((modMask, xK_minus), spawn "mpc toggle")
 	, ((0, xF86XK_MonBrightnessUp), spawn "/usr/local/bin/xbbar")
 	, ((0, xF86XK_MonBrightnessDown), spawn "/usr/local/bin/xbbar")
-	]
+	] ++
+	-- mod-[1..9] Switch to workspace N
+	-- mod-shift-[1..9] Move client to workspace N
+	[((m .|. modMask, k), windows $ f i)
+		| (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9])
+		, (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
 myDmenuLaunch :: MonadIO m => m()
 myDmenuLaunch = spawn dmenuCmd
