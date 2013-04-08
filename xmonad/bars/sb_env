@@ -26,6 +26,6 @@ DZEN_ARGS_R=(${DZEN_ARGS_R[@]} -fn $DZEN_FONT -ta r -p)
 export DZEN_ARGS_R
 
 print_space() {
-  echo -n " ^fg($DZEN_FG2)|^fg() "
+	echo -n " ^fg($DZEN_FG2)|^fg() "
 }
 
