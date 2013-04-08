@@ -8,7 +8,6 @@ import XMonad.Layout.LayoutHints
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import Graphics.X11.ExtraTypes.XF86
-import qualified Data.Map as M
 
 main = do
   myWorkspaceBar  <- spawnPipe myWorkspaceBarCmd
@@ -105,8 +104,8 @@ myManageHook = (composeAll . concat $
     myFloats  = []
     myWebs    = ["luakit"]
     myChats   = ["irssi"]
-    myVirts   = ["qemu-system-i386","qemu-system-x86_64","qemu-system-arm"]
-    myIgnores = ["desktop","desktop_window","notify-osd","stalonetray","trayer"]
+    myVirts   = ["qemu-system-x86_64","qemu-system-arm"]
+    myIgnores = ["desktop","desktop_window"]
 
 -----------------------------------------------------------
 -- LayoutHook
