@@ -81,13 +81,15 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 	{ ppCurrent         = dzenColor myBlue  "" . pad
 	, ppHidden          = dzenColor myWhite "" . pad
 	, ppHiddenNoWindows = dzenColor myGray  "" . pad
-	, ppLayout          = dzenColor myGray  "" . pad
 	, ppUrgent          = dzenColor myRed   "" . pad . dzenStrip
 	, ppTitle           = shorten 100
 	, ppWsSep           = ""
 	, ppSep             = " | "
 	, ppOutput          = hPutStrLn h
+	, ppLayout          = \l -> (pad (dzenColor myGray "" $ removeWord $ removeWord l))
 	}
+	where
+		removeWord = tail . dropWhile (/= ' ')
 
 -----------------------------------------------------------
 -- ManageHook
@@ -122,7 +124,7 @@ myManageHook = (composeAll . concat $
 -----------------------------------------------------------
 
 myTile = named "ResizableTall" $ ResizableTall 1 0.03 0.5 []
-myMirror = named "MirrorResizableTall" $ myTile
+myMirror = named "ResizableMirror" $ Mirror myTile
 
 myLayoutHook = avoidStruts
 	$ minimize
