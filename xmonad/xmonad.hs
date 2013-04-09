@@ -5,6 +5,10 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutHints
+import XMonad.Layout.Minimize
+import XMonad.Layout.Maximize
+import XMonad.Layout.Named
+import XMonad.Layout.ResizableTile
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
@@ -117,7 +121,15 @@ myManageHook = (composeAll . concat $
 -- LayoutHook
 -----------------------------------------------------------
 
-myLayoutHook = avoidStruts . layoutHints $ layoutHook defaultConfig
+myTile = named "ResizableTall" $ ResizableTall 1 0.03 0.5 []
+myMirror = named "MirrorResizableTall" $ myTile
+
+myLayoutHook = avoidStruts
+	$ minimize
+	$ maximize
+	$ allLayouts
+	where
+		allLayouts = myTile ||| myMirror
 
 -----------------------------------------------------------
 -- KeyBindings
@@ -140,6 +152,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask, xK_Return), windows W.swapMaster)
 	, ((modMask, xK_comma), sendMessage (IncMasterN 1))
 	, ((modMask, xK_period), sendMessage (IncMasterN (-1)))
+	, ((modMask, xK_h), sendMessage Shrink)
+	, ((modMask, xK_l), sendMessage Expand)
+	, ((modMask, xK_m), withFocused minimizeWindow)
+	, ((modMask .|. shiftMask, xK_m), sendMessage RestoreNextMinimizedWin)
+	, ((modMask, xK_backslash), withFocused (sendMessage . maximizeRestore))
 	-- Layout
 	, ((modMask, xK_space), sendMessage NextLayout)
 	-- Scripts / Launchers
