@@ -86,10 +86,10 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 	, ppWsSep           = ""
 	, ppSep             = " | "
 	, ppOutput          = hPutStrLn h
-	, ppLayout          = \l -> (pad (dzenColor myGray "" $ removeWord $ removeWord l))
+	, ppLayout          = \l -> (pad (dzenColor myGray "" $ rmWord $ rmWord l))
 	}
 	where
-		removeWord = tail . dropWhile (/= ' ')
+		rmWord = tail . dropWhile (/= ' ')
 
 -----------------------------------------------------------
 -- ManageHook
@@ -156,6 +156,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask, xK_period), sendMessage (IncMasterN (-1)))
 	, ((modMask, xK_h), sendMessage Shrink)
 	, ((modMask, xK_l), sendMessage Expand)
+	, ((modMask .|. shiftMask, xK_h), sendMessage MirrorShrink)
+	, ((modMask .|. shiftMask, xK_l), sendMessage MirrorExpand)
 	, ((modMask, xK_m), withFocused minimizeWindow)
 	, ((modMask .|. shiftMask, xK_m), sendMessage RestoreNextMinimizedWin)
 	, ((modMask, xK_backslash), withFocused (sendMessage . maximizeRestore))
