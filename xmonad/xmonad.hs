@@ -4,6 +4,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
+import XMonad.Layout.BoringWindows
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.Minimize
 import XMonad.Layout.Maximize
@@ -129,6 +130,7 @@ myMirror = named "ResizableMirror" $ Mirror myTile
 myLayoutHook = avoidStruts
 	$ minimize
 	$ maximize
+	$ boringWindows
 	$ allLayouts
 	where
 		allLayouts = myTile ||| myMirror
@@ -145,9 +147,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 	-- Window Management
 	, ((modMask .|. shiftMask, xK_c), kill)
-	, ((modMask, xK_j), windows W.focusDown)
-	, ((modMask, xK_k), windows W.focusUp)
-	, ((modMask, xK_a), windows W.focusMaster)
+	, ((modMask, xK_j), focusDown)
+	, ((modMask, xK_k), focusUp)
+	, ((modMask, xK_a), focusMaster)
 	, ((modMask .|. shiftMask, xK_j), windows W.swapDown)
 	, ((modMask .|. shiftMask, xK_k), windows W.swapUp)
 	, ((modMask .|. shiftMask, xK_a), windows W.swapMaster)
