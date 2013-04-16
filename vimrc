@@ -20,7 +20,20 @@ set magic
 set showmatch
 set mat=2
 
-colo elflord
+set t_Co=256
+" colors desert256
+" hi Normal ctermbg=NONE
+"
+let g:jellybeans_overrides = {
+\	'Search': {'ctermfg': 'f5deb3', 'ctermbg': 'cd853f',
+\		'guifg': 'f5deb3', 'guibg': 'cd853f',
+\		'attr': ''},
+\}
+colors jellybeans
+
+hi Normal ctermbg=NONE
+hi SpecialKey ctermbg=NONE
+hi LineNr ctermbg=NONE
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
