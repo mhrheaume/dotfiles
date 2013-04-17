@@ -172,8 +172,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask, xK_equal), spawn "amixer set Master 2+")
 	, ((modMask, xK_equal), spawn "amixer set Master 2-")
 	, ((modMask, xK_minus), spawn "mpc toggle")
-	, ((0, xF86XK_MonBrightnessUp), spawn "/usr/local/bin/xbbar")
-	, ((0, xF86XK_MonBrightnessDown), spawn "/usr/local/bin/xbbar")
+	, ((0, xF86XK_MonBrightnessUp), spawn "sudo /usr/local/bin/xbbar")
+	, ((0, xF86XK_MonBrightnessDown), spawn "sudo /usr/local/bin/xbbar")
 	]
 	++
 	-- mod-[1..9] Switch to workspace N
