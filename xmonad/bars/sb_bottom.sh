@@ -12,31 +12,31 @@ CONKYRC_L="$HOME/.xmonad/conky/conkyrc_bl"
 CONKYRC_R="$HOME/.xmonad/conky/conkyrc_br"
 
 print_vol_info() {
-	volperc=$(amixer get Master | grep "Mono:" | awk '{print $4}' | tr -d '[]%')
-	mute_state=$(amixer get Master | grep "Mono:" | awk '{print $6}')
-	echo -n "Volume "
+	volperc=$(amixer get Master | grep "Front Left:" | awk '{print $5}' | tr -d '[]%')
+	mute_state=$(amixer get Master | grep "Front Left:" | awk '{print $7}')
+	echo -n "Volume: "
 	if [[ $mute_state == "[off]" ]]; then
 		echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
 	else
 		echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
 	fi
-	echo -n "^fg($DZEN_FG2)$volperc%^fg()"
+	echo -n "^fg($DZEN_FG2)$(printf '%3s' $volperc)%^fg()"
 }
 
-print_xmms2_info() {
-	echo -n "XMMS2: ^fg($DZEN_FG2)$xmms2_status^fg()"
-	if [[ $xmms2_status == "Playing" || $xmms2_status == "Paused" ]]; then
+print_mpd_info() {
+	echo -n "MPD: ^fg($DZEN_FG2)$mpd_status^fg()"
+	if [[ $mpd_status == "Playing" || $mpd_status == "Paused" ]]; then
 		print_space
-		echo -n "^fg($DZEN_FG2)$xmms_info^fg()"
+		echo -n "^fg($DZEN_FG2)$mpd_info^fg()"
 	fi
 }
 
 print_left_bar() {
 	while true; do
-		read xmms2_status xmms2_info
+		read mpd_status mpd_info
 		print_vol_info
 		print_space
-		print_xmms2_info
+		print_mpd_info
 		echo
 	done
 }
@@ -104,8 +104,8 @@ print_right_bar() {
 
 # Disable volume bar for now..
 #
-# conky -c $CONKYRC_L |
-# print_left_bar |
+conky -c $CONKYRC_L |
+print_left_bar |
 dzen2 -x $DZEN_XPOS_L -y $DZEN_YPOS ${DZEN_ARGS_L[@]} &
 
 conky -c $CONKYRC_R |

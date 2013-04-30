@@ -1,5 +1,5 @@
 dev-vcs/git -perl -python
-app-admin/conky -ncurses
+app-admin/conky mpd -ncurses
 dev-libs/libxml2 python
 x11-wm/xmonad -default-term
 media-libs/imlib2 jpeg X

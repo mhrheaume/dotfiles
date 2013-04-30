@@ -4,6 +4,8 @@
 background no
 out_to_console yes
 update_interval 1
+mpd_host 127.0.0.1
+mpd_port 6600
 
 TEXT
-${if_xmms2_connected}${xmms2_status} ${if_match "${xmms2_status}" != "Stopped"}${xmms2_artist}\ -\ ${xmms2_title}${endif}${else}Off${endif}
+${mpd_status} ${if_match "${mpd_status}" != "Stopped"}${mpd_artist} - ${mpd_title}${endif}
