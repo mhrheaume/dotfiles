@@ -2,7 +2,7 @@
 echo mid > /sys/class/drm/card0/device/power_profile
 
 if [ `cat /sys/class/power_supply/AC/online` = "0" ]; then
-	pm-powersave true
+	SATA_ALPM_ENABLE=true /usr/sbin/pm-powersave true
 else
-	pm-powersave false
+	/usr/sbin/pm-powersave false
 fi
