@@ -9,17 +9,17 @@ CONKYRC="$HOME/.xmonad/conky/conkyrc_top"
 
 print_cpu_info() {
 	echo -n "CPU: ^fg($DZEN_FG2)${cpufreq}GHz^fg() "
-	echo -n "$(echo $cpuperc | gdbar ${GDBAR_ARGS[@]})"
+	echo -n "$(echo $cpuperc | gdbar ${GDBAR_ARGS_NORM[@]})"
 }
 
 print_mem_info() {
 	echo -n "Mem: ^fg($DZEN_FG2)$memused/$memmax ^fg()"
-	echo -n "$(echo $memperc | gdbar ${GDBAR_ARGS[@]})"
+	echo -n "$(echo $memperc | gdbar ${GDBAR_ARGS_NORM[@]})"
 }
 
 print_fs_info() {
 	echo -n "FS: ^fg($DZEN_FG2)$fs_type $fs_used/$fs_size ^fg()"
-	echo -n "$(echo $fs_perc | gdbar ${GDBAR_ARGS[@]})"
+	echo -n "$(echo $fs_perc | gdbar ${GDBAR_ARGS_NORM[@]})"
 }
 
 print_date_info() {

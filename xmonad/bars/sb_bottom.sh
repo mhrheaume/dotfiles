@@ -16,9 +16,9 @@ print_vol_info() {
 	mute_state=$(amixer get Master | grep "Front Left:" | awk '{print $7}')
 	echo -n "Volume: "
 	if [[ $mute_state == "[off]" ]]; then
-		echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
+		echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS_NORM[@]}) "
 	else
-		echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS[@]}) "
+		echo -n "$(echo $volperc | gdbar ${GDBAR_ARGS_NORM[@]}) "
 	fi
 	echo -n "^fg($DZEN_FG2)$(printf '%3s' $volperc)%^fg()"
 }
@@ -78,7 +78,13 @@ print_battery_info() {
 
 	echo -n "Battery: "
 	echo -n "^fg($DZEN_FG2)$battery_status^fg() "
-	echo -n "$(echo $battery_percent | gdbar ${GDBAR_ARGS[@]}) "
+
+	if [[ "$battery_percent" -le "25" ]]; then
+		echo -n "$(echo $battery_percent | gdbar ${GDBAR_ARGS_CRIT[@]}) "
+	else
+		echo -n "$(echo $battery_percent | gdbar ${GDBAR_ARGS_NORM[@]}) "
+	fi
+
 	echo -n "^fg($DZEN_FG2)$(printf '%3s' $battery_percent)%^fg()"
 }
 
@@ -86,8 +92,8 @@ print_wireless_info() {
 	echo -n "WIFI: "
 	echo -n "^fg($DZEN_FG2)$wireless_essid^fg() "
 
-	if [[ "$wireless_perc" == "unk" ]]; then; wireless_perc="0"; fi
-	echo -n "$(echo $wireless_perc | gdbar ${GDBAR_ARGS[@]}) "
+	if [[ "$wireless_essid" == "off/unk" ]]; then; wireless_perc="0"; fi
+	echo -n "$(echo $wireless_perc | gdbar ${GDBAR_ARGS_NORM[@]}) "
 	echo -n "^fg($DZEN_FG2)$(printf '%3s' $wireless_perc)%^fg()"
 }
   
