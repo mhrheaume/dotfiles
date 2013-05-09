@@ -92,7 +92,7 @@ print_wireless_info() {
 	echo -n "WIFI: "
 	echo -n "^fg($DZEN_FG2)$wireless_essid^fg() "
 
-	if [[ "$wireless_essid" == "off/unk" ]]; then; wireless_perc="0"; fi
+	if [[ "$wireless_essid" == "off/any" ]]; then; wireless_perc="0"; fi
 	echo -n "$(echo $wireless_perc | gdbar ${GDBAR_ARGS_NORM[@]}) "
 	echo -n "^fg($DZEN_FG2)$(printf '%3s' $wireless_perc)%^fg()"
 }
