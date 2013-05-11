@@ -163,6 +163,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask, xK_m), withFocused minimizeWindow)
 	, ((modMask .|. shiftMask, xK_m), sendMessage RestoreNextMinimizedWin)
 	, ((modMask, xK_backslash), withFocused (sendMessage . maximizeRestore))
+	, ((modMask, xK_t), withFocused $ windows . W.sink)
 	-- Layout
 	, ((modMask, xK_space), sendMessage NextLayout)
 	-- Scripts / Launchers
