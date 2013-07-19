@@ -32,6 +32,7 @@ let g:jellybeans_overrides = {
 colors jellybeans
 
 hi Normal ctermbg=NONE
+hi NonText ctermbg=NONE
 hi SpecialKey ctermbg=NONE
 hi LineNr ctermbg=NONE
 
@@ -88,7 +89,17 @@ nmap <leader>l <C-w>l
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>d :NERDTreeToggle<CR>
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Valloric/YouCompleteMe'
+
+filetype plugin on
+
+let g:ycm_confirm_extra_conf = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Overrides
