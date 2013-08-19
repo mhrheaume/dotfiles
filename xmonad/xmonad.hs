@@ -69,7 +69,17 @@ myColorFocusedBorder  = myBlue
 -----------------------------------------------------------
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces  = ["1:term1","2:term2","3:web","4:chat","5:virt"]
+myWorkspaces  =
+	[ "^i(" ++ myIconDir ++ "/term.xbm) code[0]"
+	, "^i(" ++ myIconDir ++ "/term.xbm) code[1]"
+	, "^i(" ++ myIconDir ++ "/google-chrome.xbm) web"
+	, "^i(" ++ myIconDir ++ "/misc.xbm) chat"
+	, "^i(" ++ myIconDir ++ "/cpu.xbm) virt"
+	, "^i(" ++ myIconDir ++ "/docs.xbm) pdf"
+	, "^i(" ++ myIconDir ++ "/phones.xbm) music"
+	]
+	where
+		myIconDir = myConfigRoot ++ "/icons/"
 
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
@@ -105,19 +115,24 @@ myChatManageHook = doShift (myWorkspaces !! 3)
 myVirtManageHook :: ManageHook
 myVirtManageHook = doShift (myWorkspaces !! 4) <+> doCenterFloat
 
+myPdfManageHook :: ManageHook
+myPdfManageHook = doShift (myWorkspaces !! 5)
+
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
 	[ [resource   =? r  --> doIgnore          | r <- myIgnores]
 	, [className  =? c  --> myWebManageHook   | c <- myWebs   ]
 	, [title      =? t  --> myChatManageHook  | t <- myChats  ]
 	, [className  =? c  --> myVirtManageHook  | c <- myVirts  ]
+	, [className  =? c  --> myPdfManageHook   | c <- myPdfs   ]
 	, [className  =? c  --> doCenterFloat     | c <- myFloats ]
 	])
 	where
-		myFloats  = []
+		myFloats  = ["feh"]
 		myWebs    = ["luakit"]
 		myChats   = ["irssi"]
 		myVirts   = ["qemu-system-x86_64","qemu-system-arm"]
+		myPdfs    = ["apvlv"]
 		myIgnores = ["desktop","desktop_window"]
 
 -----------------------------------------------------------
@@ -173,6 +188,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask, xK_equal), spawn "amixer set Master 2+")
 	, ((modMask, xK_equal), spawn "amixer set Master 2-")
 	, ((modMask, xK_minus), spawn "mpc toggle")
+	, ((modMask .|. shiftMask, xK_comma), spawn "mpc prev")
+	, ((modMask .|. shiftMask, xK_period), spawn "mpc next")
 	, ((0, xF86XK_MonBrightnessUp), spawn "sudo /usr/local/bin/xbbar")
 	, ((0, xF86XK_MonBrightnessDown), spawn "sudo /usr/local/bin/xbbar")
 	]
