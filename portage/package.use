@@ -2,12 +2,20 @@ dev-vcs/git -perl -python
 app-admin/conky mpd -ncurses
 dev-libs/libxml2 python
 x11-wm/xmonad -default-term
-media-libs/imlib2 jpeg X
+media-libs/imlib2 jpeg png X
 net-libs/webkit-gtk -geoloc -introspection
-X11-libs/cairo X
+x11-libs/cairo X
 dev-java/icedtea-bin -alsa -X
-app-text/poppler cairo
-media-sound/mpd lame
+app-text/poppler cairo xpdf-headers
 app-emulation/qemu sdl virtfs xattr -alsa -bluetooth -caps -curl -ncurses -vhost-net -vnc
-media-libs/libsdl -alsa -audio -joystick
+media-libs/libsdl X -alsa -audio -joystick
 app-portage/layman git
+net-libs/libpcap -bluetooth
+x11-misc/slim branding
+media-sound/mpd lame
+x11-terms/rxvt-unicode 256-color
+x11-libs/gtk+ X
+x11-libs/pango X
+app-editors/vim python ruby
+sys-devel/gcc -fortran
+sys-devel/llvm clang
