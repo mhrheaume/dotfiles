@@ -22,7 +22,7 @@ import qualified Data.Map as M
 main = do
 	myWorkspaceBar <- spawnPipe myWorkspaceBarCmd
 	myTopBar <- spawnPipe myTopBarCmd
-	myBottomBar <- spawnPipe myBottomBarCmd
+	-- myBottomBar <- spawnPipe myBottomBarCmd
 	xmonad $ myUrgencyHook $ defaultConfig
 		{ terminal            = myTerminal
 		, workspaces          = myWorkspaces
@@ -68,6 +68,9 @@ myColorFocusedBorder  = myBlue
 -- Status Bars
 -----------------------------------------------------------
 
+myIconDir :: String
+myIconDir = myConfigRoot ++ "/icons"
+
 myWorkspaces :: [WorkspaceId]
 myWorkspaces  =
 	[ "^i(" ++ myIconDir ++ "/term.xbm) code[0]"
@@ -78,8 +81,6 @@ myWorkspaces  =
 	, "^i(" ++ myIconDir ++ "/docs.xbm) pdf"
 	, "^i(" ++ myIconDir ++ "/phones.xbm) music"
 	]
-	where
-		myIconDir = myConfigRoot ++ "/icons/"
 
 myUrgencyHook = withUrgencyHook NoUrgencyHook
 
@@ -89,18 +90,24 @@ myTopBarCmd        = myConfigRoot ++ "/bars/sb_top_r.sh"
 myBottomBarCmd     = myConfigRoot ++ "/bars/sb_bottom.sh" 
 
 myLogHook h = dynamicLogWithPP $ defaultPP
-	{ ppCurrent         = dzenColor myBlue  "" . pad
-	, ppHidden          = dzenColor myWhite "" . pad
+	{ ppCurrent         = dzenColor myWhite  "" . pad
+	, ppHidden          = dzenColor myBlue "" . pad
 	, ppHiddenNoWindows = dzenColor myGray  "" . pad
 	, ppUrgent          = dzenColor myRed   "" . pad . dzenStrip
 	, ppTitle           = shorten 100
 	, ppWsSep           = ""
-	, ppSep             = " | "
+	, ppSep             = dzenColor myBlue "" " | "
 	, ppOutput          = hPutStrLn h
-	, ppLayout          = \l -> (pad (dzenColor myGray "" $ rmWord $ rmWord l))
+	, ppLayout          = dzenColor myWhite "" .
+		(\l -> case (rmWord $ rmWord l) of
+			"ResizableTall"   -> "^i(" ++ tallIcon ++ ")"
+			"ResizableMirror" -> "^i(" ++ mirrorIcon ++ ")"
+		)
 	}
 	where
 		rmWord = tail . dropWhile (/= ' ')
+		tallIcon = myIconDir ++ "/layout_tall.xbm"
+		mirrorIcon = myIconDir ++ "/layout_mirror_tall.xbm"
 
 -----------------------------------------------------------
 -- ManageHook

@@ -6,5 +6,10 @@ out_to_console yes
 update_interval 1
 
 TEXT
-${cpu cpu0} ${freq_g} ${mem} ${memmax} ${memperc} ${fs_type} ${fs_used} ${fs_size} ${fs_used_perc} \
+${freq_g}|\
+${mem}|\
+${if_match "${battery_short}" == "F"}F 100%${else}\
+${if_match "${battery_short}" == "U"}U 0%${else}\
+${battery_short}${endif}${endif}|\
+${wireless_essid wlan0}|\
 ${time %a %b %d %H:%M}
