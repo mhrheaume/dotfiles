@@ -7,7 +7,7 @@ set nocompatible
 set hidden
 let mapleader = ','
 
-set autochdir
+"set autochdir
 set autoread
 set autowrite
 
@@ -19,6 +19,7 @@ set number
 set magic
 set showmatch
 set mat=2
+set completeopt-=preview
 
 set t_Co=256
 " colors desert256
@@ -52,6 +53,7 @@ set tabstop=4
 set smarttab
 set autoindent
 set smartindent
+set textwidth=79
 
 set listchars=tab:>-
 set list
@@ -83,9 +85,6 @@ nmap k gk
 nmap <leader>n :bnext<CR>
 nmap <leader>p :bprev<CR>
 
-nmap <leader>h <C-w>h
-nmap <leader>l <C-w>l
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -96,6 +95,8 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'wincent/Command-T'
 
 filetype plugin on
 
