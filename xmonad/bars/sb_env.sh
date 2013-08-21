@@ -1,20 +1,5 @@
 #!/bin/zsh
 
-export GDBAR_FG_NORM="#3475aa"
-export GDBAR_FG_CRIT="#cd5c5c"
-export GDBAR_BG="#363636"
-export GDBAR_W=65
-export GDBAR_H=9
-
-GDBAR_ARGS=(-h $GDBAR_H -w $GDBAR_W -s o -ss 1 -sw 2 -nonl)
-export GDBAR_ARGS
-
-GDBAR_ARGS_NORM=(${GDBAR_ARGS[@]} -fg $GDBAR_FG_NORM -bg $GDBAR_BG)
-GDBAR_ARGS_CRIT=(${GDBAR_ARGS[@]} -fg $GDBAR_FG_CRIT -bg $GDBAR_BG)
-export GDBAR_ARGS_NORM
-export GDBAR_ARGS_CRIT
-
-
 export DZEN_FG="#ffffff"
 export DZEN_FG2="#3475aa"
 export DZEN_BG="#1a1a1a"
