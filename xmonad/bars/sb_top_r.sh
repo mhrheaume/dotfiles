@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source $HOME/.xmonad/bars/sb_env
+source $HOME/.xmonad/bars/sb_env.sh
 
 DZEN_XPOS=$DZEN_W
 DZEN_YPOS=0
@@ -10,7 +10,7 @@ CONKYRC="$HOME/.xmonad/conky/conkyrc_top"
 print_volume_info() {
 	volume_percent=$(amixer get Master | grep "Front Left:" | awk '{print $5}' | tr -d "[]%")
 
-	echo -n "^fg($DZEN_FG2)^i($ICON_DIR/volume25.xbm)^fg() "
+	echo -n "^fg($DZEN_FG2)^i($ICON_DIR/volume50.xbm)^fg() "
 	echo -n "^fg($DZEN_FG1)$volume_percent%^fg()"
 }
 
