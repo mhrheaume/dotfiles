@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Use dpm for newer kernels
+linux_major=`uname -r | cut -d . -f1`
+linux_minor=`uname -r | cut -d . -f2`
+
+radeon_battery() {
+	if [ $linux_major -ge 3 -a $linux_minor -ge 11 ]; then
+		echo battery > /sys/class/drm/card0/device/power_dpm_state
+	else
+		echo mid > /sys/class/drm/card0/device/power_profile
+	fi
+}
+
+radeon_balanced() {
+	if [ $linux_major -ge 3 -a $linux_minor -ge 11 ]; then
+		echo balanced > /sys/class/drm/card0/device/power_dpm_state
+	else
+		echo mid > /sys/class/drm/card0/device/power_profile
+	fi
+}
+
+case $1 in
+	true) radeon_battery ;;
+	false) radeon_balanced ;;
+	*) exit $NA
+esac
+
+exit 0

@@ -3,7 +3,6 @@
 br_dir=/sys/class/backlight/acpi_video0
 br_max=`cat ${br_dir}/max_brightness`
 
-
 screen_brightness() {
 	printf "Setting screen brightness to %d..." "$1"
 	echo $1 > $br_dir/brightness
