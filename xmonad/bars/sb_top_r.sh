@@ -8,7 +8,7 @@ DZEN_YPOS=0
 CONKYRC="$HOME/.xmonad/conky/conkyrc_top"
 
 print_volume_info() {
-	volume_percent=$(amixer get Master | grep "Front Left:" | awk '{print $5}' | tr -d "[]%")
+	volume_percent=$(amixer get Master | grep "Mono:" | awk '{print $4}' | tr -d "[]%")
 
 	echo -n "^fg($DZEN_FG2)^i($ICON_DIR/volume50.xbm)^fg() "
 	echo -n "^fg($DZEN_FG1)$volume_percent%^fg()"
