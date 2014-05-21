@@ -10,16 +10,19 @@ import XMonad.Layout.Minimize
 import XMonad.Layout.Maximize
 import XMonad.Layout.Named
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spacing
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
 import Graphics.X11.ExtraTypes.XF86
-import System.Exit;
+import System.Exit
+import System.Posix.Unistd
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
 main = do
+	hostname <- fmap nodeName getSystemID
 	myWorkspaceBar <- spawnPipe myWorkspaceBarCmd
 	myTopBar <- spawnPipe myTopBarCmd
 	-- myBottomBar <- spawnPipe myBottomBarCmd
@@ -31,7 +34,7 @@ main = do
 		, logHook             = myLogHook myWorkspaceBar
 		, normalBorderColor   = myColorNormalBorder
 		, focusedBorderColor  = myColorFocusedBorder
-		, modMask             = mod4Mask
+		, modMask             = if hostname == "reventon" then mod4Mask else mod1Mask
 		, keys                = myKeys
 		, borderWidth         = 1
 		}
@@ -40,7 +43,7 @@ main = do
 -- Misc
 -----------------------------------------------------------
 
-myConfigRoot = "/home/matt/.xmonad"
+myConfigRoot = "/home/mhr/.xmonad"
 
 -----------------------------------------------------------
 -- Applications
@@ -99,13 +102,14 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 	, ppSep             = dzenColor myBlue "" " | "
 	, ppOutput          = hPutStrLn h
 	, ppLayout          = dzenColor myWhite "" .
-		(\l -> case (rmWord $ rmWord l) of
+		(\l -> case (rmWords 4 l) of
 			"ResizableTall"   -> "^i(" ++ tallIcon ++ ")"
 			"ResizableMirror" -> "^i(" ++ mirrorIcon ++ ")"
 		)
 	}
 	where
 		rmWord = tail . dropWhile (/= ' ')
+		rmWords n words = iterate rmWord words !! n
 		tallIcon = myIconDir ++ "/layout_tall.xbm"
 		mirrorIcon = myIconDir ++ "/layout_mirror_tall.xbm"
 
@@ -122,24 +126,19 @@ myChatManageHook = doShift (myWorkspaces !! 3)
 myVirtManageHook :: ManageHook
 myVirtManageHook = doShift (myWorkspaces !! 4) <+> doCenterFloat
 
-myPdfManageHook :: ManageHook
-myPdfManageHook = doShift (myWorkspaces !! 5)
-
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
 	[ [resource   =? r  --> doIgnore          | r <- myIgnores]
 	, [className  =? c  --> myWebManageHook   | c <- myWebs   ]
 	, [title      =? t  --> myChatManageHook  | t <- myChats  ]
 	, [className  =? c  --> myVirtManageHook  | c <- myVirts  ]
-	, [className  =? c  --> myPdfManageHook   | c <- myPdfs   ]
 	, [className  =? c  --> doCenterFloat     | c <- myFloats ]
 	])
 	where
 		myFloats  = ["feh"]
-		myWebs    = ["luakit"]
+		myWebs    = ["dwb"]
 		myChats   = ["irssi"]
 		myVirts   = ["qemu-system-x86_64","qemu-system-arm"]
-		myPdfs    = ["apvlv"]
 		myIgnores = ["desktop","desktop_window"]
 
 -----------------------------------------------------------
@@ -153,6 +152,7 @@ myLayoutHook = avoidStruts
 	$ minimize
 	$ maximize
 	$ boringWindows
+	$ smartSpacing 3
 	$ allLayouts
 	where
 		allLayouts = myTile ||| myMirror
@@ -191,7 +191,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	-- Scripts / Launchers
 	, ((modMask, xK_p), myDmenuLaunch)
 	, ((modMask, xK_i), runInTerm "-title irssi" "irssi")
-	, ((modMask, xK_b), spawn "luakit")
+	, ((modMask, xK_b), spawn "dwb")
 	, ((modMask .|. shiftMask, xK_equal), spawn "amixer set Master 2+")
 	, ((modMask, xK_equal), spawn "amixer set Master 2-")
 	, ((modMask, xK_minus), spawn "mpc toggle")
@@ -224,6 +224,6 @@ myDmenuLaunch = spawn dmenuCmd
 myRestart :: MonadIO m => m()
 myRestart = spawn $ killproc ++ "; " ++ xm_recomp ++ " && " ++ xm_reset
 	where
-		killproc  = "killall conky dzen2"
+		killproc  = "killall -9 conky dzen2"
 		xm_recomp = "xmonad --recompile"
 		xm_reset  = "xmonad --restart"
