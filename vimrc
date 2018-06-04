@@ -7,7 +7,6 @@ set nocompatible
 set hidden
 let mapleader = ' '
 
-"set autochdir
 set autoread
 set autowrite
 
@@ -22,6 +21,7 @@ set ruler
 set mat=2
 set completeopt-=preview
 set laststatus=2
+syntax on
 
 set t_Co=256
 let g:jellybeans_overrides = {
@@ -35,10 +35,10 @@ let g:jellybeans_overrides = {
 \}
 colors jellybeans
 
-hi Normal ctermbg=NONE
-hi NonText ctermbg=NONE
-hi SpecialKey ctermbg=NONE
-hi LineNr ctermbg=NONE
+" hi Normal ctermbg=NONE
+" hi NonText ctermbg=NONE
+" hi SpecialKey ctermbg=NONE
+" hi LineNr ctermbg=NONE
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -53,23 +53,37 @@ au Syntax thrift source ~/.vim/syntax/thrift.vim
 au BufRead,BufNewFile *.scala set filetype=scala
 au Syntax scala source ~/.vim/syntax/scala.vim
 
+au BufRead,BufNewFile *.pig set filetype=pig
+au BufRead,BufNewFile *.piglet set filetype=pig
+au Syntax pig source ~/.vim/syntax/pig.vim
+
 au BufRead,BufNewFile *.aurora set filetype=python
 au BufRead,BufNewFile BUILD* set filetype=python
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set smarttab
+set expandtab
 set autoindent
 set smartindent
-set textwidth=79
 
 set listchars=tab:>-
 set list
 
 set backspace=indent,eol,start
+
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+" Strip trailing whitespace when files are saved
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Searching
@@ -78,6 +92,9 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+
+set tagstack
+set tags=./tags;/,~/.scalatags,~/.javatags
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Navigation
@@ -117,6 +134,7 @@ inoremap []       []
 inoremap <        <><Left>
 inoremap <<Space> <<Space>
 inoremap <=       <=
+inoremap <-       <-
 
 inoremap "        ""<Left>
 inoremap ""       "
@@ -127,34 +145,25 @@ inoremap ''       '
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
+set nomodeline
 filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-filetype plugin indent on
 
-Bundle 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
-" YouCompletMe completion
-Bundle 'Valloric/YouCompleteMe'
-let g:ycm_confirm_extra_conf = 0
+Plugin 'gmarik/Vundle'
+
+" YouCompleteMe completion
+" Plugin 'Valloric/YouCompleteMe'
+" let g:ycm_confirm_extra_conf = 0
 
 " Ctrl-P fuzzy file finder
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 nmap <leader>t :CtrlP .<CR>
 let g:ctrlp_custom_ignore = {
 \	'dir': '\v(\.git|target)$'
 \}
-
-" Gocode completion, formatting for golang
-Bundle 'Blackrush/vim-gocode'
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_chan_whitespace_error = 0
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-
-" Rust highlighting, formatting, etc.
-Bundle 'wting/rust.vim'
-au BufRead,BufNewFile *.rs set filetype=rust
 
 " Eclim (installed outside of Vundle)
 let g:EclimCompletionMethod = 'omnifunc'
@@ -167,13 +176,21 @@ nmap <leader>jg  :JavaGet<CR>
 nmap <leader>js  :JavaSet<CR>
 nmap <leader>jgs :JavaGetSet<CR>
 nmap <leader>jsc :JavaSearchContext<CR>
+nmap <leader>si  :ScalaImport<CR>
+nmap <leader>ss  :ScalaSearch<CR>
 
 " Lightline status bar
-Bundle 'itchyny/lightline.vim'
+Plugin 'itchyny/lightline.vim'
 let g:lightline = {
 \	'colorscheme': 'jellybeans'
 \}
 
 " Buffer explorer, surround
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'tpope/vim-surround'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'tpope/vim-surround'
+
+" Working with mustache and handlebars templates
+Plugin 'mustache/vim-mustache-handlebars'
+
+call vundle#end()
+filetype plugin indent on
