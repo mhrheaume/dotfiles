@@ -1,17 +1,52 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin()
+
+" UI Plugins
+Plug 'nanotech/jellybeans.vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'itchyny/lightline.vim'
+
+" Editing
+Plug 'tpope/vim-surround'
+
+" Languages
+Plug 'rust-lang/rust.vim'
+Plug 'solarnz/thrift.vim'
+Plug 'udalov/kotlin-vim'
+
+" FZF
+Plug '/opt/homebrew/opt/fzf'
+nnoremap <leader>t :call fzf#run({'sink': 'e'})<CR>
+nnoremap <leader>gt :call fzf#run({'source': 'git ls-files', 'sink': 'e'})<CR>
+
+" Deoplete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:python3_host_prog = "/usr/bin/python3"
+let g:deoplete#enable_at_startup = 1
+
+" Deoplate Plugins
+Plug 'deoplete-plugins/deoplete-jedi'
+
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set history=700
 set autoread
 set nocompatible
 set hidden
-let mapleader = ' '
 
 set autoread
 set autowrite
 
+set visualbell
+set noerrorbells
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
+" => VIM UI
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set ignorecase
 set number
@@ -24,21 +59,12 @@ set laststatus=2
 syntax on
 
 set t_Co=256
-let g:jellybeans_overrides = {
-\	'Search': {
-\		'ctermfg': 'f5deb3',
-\		'ctermbg': 'cd853f',
-\		'guifg': 'f5deb3',
-\		'guibg': 'cd853f',
-\		'attr': ''
-\	},
-\}
-colors jellybeans
+set termguicolors
+colorscheme nord
 
-" hi Normal ctermbg=NONE
-" hi NonText ctermbg=NONE
-" hi SpecialKey ctermbg=NONE
-" hi LineNr ctermbg=NONE
+let g:lightline = {
+\	'colorscheme': 'nord'
+\}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -48,14 +74,6 @@ set nowb
 set noswapfile
 
 au BufRead,BufNewFile *.thrift set filetype=thrift
-au Syntax thrift source ~/.vim/syntax/thrift.vim
-
-au BufRead,BufNewFile *.scala set filetype=scala
-au Syntax scala source ~/.vim/syntax/scala.vim
-
-au BufRead,BufNewFile *.pig set filetype=pig
-au BufRead,BufNewFile *.piglet set filetype=pig
-au Syntax pig source ~/.vim/syntax/pig.vim
 
 au BufRead,BufNewFile *.aurora set filetype=python
 au BufRead,BufNewFile BUILD* set filetype=python
@@ -63,6 +81,9 @@ au BufRead,BufNewFile BUILD* set filetype=python
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :help ft-python-plugin
+let g:python_recommended_style = 0
+
 set shiftwidth=2
 set tabstop=2
 set smarttab
@@ -83,7 +104,7 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 " Strip trailing whitespace when files are saved
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+" autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Searching
@@ -99,6 +120,11 @@ set tags=./tags;/,~/.scalatags,~/.javatags
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Disable mouse
+set mouse=
+
+map <Space> <leader>
+
 inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
 inoremap  <Left>   <NOP>
@@ -114,6 +140,12 @@ nmap k gk
 
 nmap <leader>n :bnext<CR>
 nmap <leader>p :bprev<CR>
+
+" Map Ctrl+[ to esc
+nmap <c-c> <esc>
+imap <c-c> <esc>
+vmap <c-c> <esc>
+omap <c-c> <esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Insert Macros
@@ -141,56 +173,3 @@ inoremap ""       "
 
 inoremap '        ''<Left>
 inoremap ''       '
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible
-set nomodeline
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
-
-Plugin 'gmarik/Vundle'
-
-" YouCompleteMe completion
-" Plugin 'Valloric/YouCompleteMe'
-" let g:ycm_confirm_extra_conf = 0
-
-" Ctrl-P fuzzy file finder
-Plugin 'kien/ctrlp.vim'
-nmap <leader>t :CtrlP .<CR>
-let g:ctrlp_custom_ignore = {
-\	'dir': '\v(\.git|target)$'
-\}
-
-" Eclim (installed outside of Vundle)
-let g:EclimCompletionMethod = 'omnifunc'
-nmap <leader>pt  :ProjectTreeToggle<CR>
-nmap <leader>pr  :ProjectRefresh<CR>
-nmap <leader>ji  :JavaImport<CR>
-nmap <leader>jr  :JavaRename<CR>
-nmap <leader>jc  :JavaCorrect<CR>
-nmap <leader>jg  :JavaGet<CR>
-nmap <leader>js  :JavaSet<CR>
-nmap <leader>jgs :JavaGetSet<CR>
-nmap <leader>jsc :JavaSearchContext<CR>
-nmap <leader>si  :ScalaImport<CR>
-nmap <leader>ss  :ScalaSearch<CR>
-
-" Lightline status bar
-Plugin 'itchyny/lightline.vim'
-let g:lightline = {
-\	'colorscheme': 'jellybeans'
-\}
-
-" Buffer explorer, surround
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'tpope/vim-surround'
-
-" Working with mustache and handlebars templates
-Plugin 'mustache/vim-mustache-handlebars'
-
-call vundle#end()
-filetype plugin indent on

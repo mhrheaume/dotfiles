@@ -1,36 +1,44 @@
-# Command history
-export HISTSIZE=1000
-export SAVEHIST=1000
-
-export HISTFILE=~/.zhistory
-
-setopt inc_append_history
-
+#############################
+# General Configuration
+#############################
 set -o vi
 
-# Tab Completion
-autoload -U compinit
-compinit
+bindkey -v
+bindkey '^R' history-incremental-pattern-search-backward
 
-# Prompt appearance
-autoload -U colors
+export VISUAL=nvim
+export EDITOR=nvim
+
+#############################
+# Autocompletion
+#############################
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+#############################
+# Prompt
+#############################
+
+# Git Prompt
+GIT_PS1_OMITPARSESTATE=true
+source ~/.git-prompt.sh
+
+autoload -Uz colors
 colors
 
-if [ $UID = 0 ]; then
-    name_color="$fg[red]"
-else
-    name_color="$fg[green]"
-fi
+setopt PROMPT_SUBST
+PS1='%{$fg[cyan]%}%c%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) %{$fg[cyan]%}λ%{$reset_color%} '
 
-PROMPT="%B%{${name_color}%}%n@%m %{$fg[blue]%}%1d %#%{$reset_color%}%b "
-RPROMPT=""
+#############################
+# Aliases
+#############################
+alias vim='nvim'
+alias ls='exa'
+alias cat='bat'
 
-# SSH hosts tab completion
-if [ -f $HOME/.ssh/known_hosts ]; then
-    local _myhosts
-    _myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
-    zstyle ':completion:*' hosts $_myhosts
-fi
+alias g='git'
 
-alias g='grep -R -n'
-alias ls='ls --color'
