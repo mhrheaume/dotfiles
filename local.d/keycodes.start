@@ -1,8 +1,0 @@
-#!/bin/zsh
-#
-# Set keycodes for brightness up/down
-#
-###
-
-setkeycodes e012 224
-setkeycodes e017 225

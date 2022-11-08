@@ -1,9 +1,0 @@
-x11-themes/chameleon-xcursors ~amd64
-dev-util/boost-build ~amd64
-app-arch/snappy ~amd64
-dev-libs/boost ~amd64
-x11-misc/slimlock ~amd64
-sys-power/powertop ~amd64
-www-client/luakit ~amd64
-sys-devel/llvm ~amd64
-sys-devel/clang ~amd64
