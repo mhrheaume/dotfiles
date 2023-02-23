@@ -6,6 +6,7 @@ call plug#begin()
 " UI Plugins
 Plug 'nanotech/jellybeans.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 
 " Editing
@@ -23,7 +24,7 @@ nnoremap <leader>gt :call fzf#run({'source': 'git ls-files', 'sink': 'e'})<CR>
 
 " Deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:python3_host_prog = "/usr/bin/python3"
+let g:python3_host_prog = '/opt/homebrew/bin/python3'
 let g:deoplete#enable_at_startup = 1
 
 " Deoplate Plugins
@@ -60,10 +61,10 @@ syntax on
 
 set t_Co=256
 set termguicolors
-colorscheme nord
+colorscheme gruvbox
 
 let g:lightline = {
-\	'colorscheme': 'nord'
+\	'colorscheme': 'gruvbox'
 \}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -73,13 +74,8 @@ set nobackup
 set nowb
 set noswapfile
 
-au BufRead,BufNewFile *.thrift set filetype=thrift
-
-au BufRead,BufNewFile *.aurora set filetype=python
-au BufRead,BufNewFile BUILD* set filetype=python
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
+" => Formatting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :help ft-python-plugin
 let g:python_recommended_style = 0
