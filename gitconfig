@@ -1,0 +1,60 @@
+# vim: ts=2 sw=2 noet
+[user]
+	name = Matthew Rheaume
+	email = me@example.com
+[diff]
+	renames = true
+[color]
+	ui = true
+[http]
+	postBuffer = 524288000
+[push]
+	default = matching
+[alias]
+	g = grep
+	a = add
+	c = commit
+	co = checkout
+	cob = checkout -b
+	s = status
+	r = rebase
+	rbm = rebase -i master
+	m = merge
+	l = log
+	p = push origin
+	up = fetch
+	prune = remote prune origin
+	re = reset --hard HEAD
+	f = fetch
+	d = diff
+	dh = diff HEAD
+  dh1 = diff HEAD~1
+  dh2 = diff HEAD~2
+	ds = diff --staged
+	dm = !git diff $(git merge-base --fork-point master)
+	b = branch
+	ba = branch -a
+	bl = branch -l
+	bm = branch -m
+	lp = !git log --format=format:"%s"
+	files = show --pretty="format:" --name-only
+	history = log --follow -p
+	stat = !git diff --stat HEAD^ HEAD
+	lg = log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
