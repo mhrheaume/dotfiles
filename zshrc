@@ -2,6 +2,7 @@
 # General Configuration
 #############################
 set -o vi
+setopt IGNOREEOF
 
 bindkey -v
 bindkey '^R' history-incremental-pattern-search-backward
@@ -9,7 +10,17 @@ bindkey '^R' history-incremental-pattern-search-backward
 export VISUAL=nvim
 export EDITOR=nvim
 
-setopt share_history
+export SAVEHIST=100000
+export HISTSIZE=$SAVEHIST
+
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 
 #############################
 # Autocompletion
@@ -20,6 +31,9 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.helm.zsh ] && source ~/.helm.zsh
 
 #############################
 # Prompt
@@ -41,14 +55,28 @@ PS1='%{$fg[cyan]%}%c%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) 
 alias vim='nvim'
 alias ls='exa'
 alias cat='bat'
+alias find='fd'
+alias grep='rg'
 
 alias g='git'
+
+#############################
+# Local bin
+#############################
+export PATH=$HOME/bin:$PATH
+
+#############################
+# Python
+#############################
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 #############################
 # Go
 #############################
 export GOPATH=~/go
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:$PATH
 
 #############################
 # Node
@@ -57,4 +85,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#############################
+# zoxide
+#############################
+eval "$(zoxide init zsh)"
