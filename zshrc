@@ -53,12 +53,13 @@ PS1='%{$fg[cyan]%}%c%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) 
 # Aliases
 #############################
 alias vim='nvim'
-alias ls='exa'
+alias ls='eza'
 alias cat='bat'
 alias find='fd'
 alias grep='rg'
 
 alias g='git'
+alias k='kubectl'
 
 #############################
 # Local bin
