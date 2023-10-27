@@ -87,9 +87,16 @@ require("lazy").setup({
     }
   },
   -- Lualine
-  -- {
-
-  -- }
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      theme = "gruvbox"
+    }
+  },
   -- Colors
   {
     "ellisonleao/gruvbox.nvim",
