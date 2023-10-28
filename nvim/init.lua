@@ -18,6 +18,7 @@ vim.opt.magic = true
 vim.opt.showmatch = true
 vim.opt.ruler = true
 vim.opt.mat = 2
+vim.opt.showmode = false
 vim.opt.completeopt:remove { "preview" }
 
 -- Formatting
