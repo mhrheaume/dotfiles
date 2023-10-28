@@ -86,6 +86,25 @@ require("lazy").setup({
       },
     }
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "VeryLazy",
+    opts = {
+      indent = {
+        char = "│",
+        tab_char = "│",
+      },
+      scope = { enabled = false },
+      exclude = {
+        filetypes = {
+          "help",
+          "neo-tree",
+          "lazy",
+        },
+      },
+    },
+    main = "ibl",
+  },
   -- Lualine
   {
     "nvim-lualine/lualine.nvim",
