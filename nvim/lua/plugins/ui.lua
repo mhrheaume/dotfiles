@@ -39,6 +39,23 @@ return {
       }
     }
   },
+  -- Bufferline
+  {
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    opts = {
+      options = {
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "Explorer",
+            highlight = "Directory",
+            text_align = "left",
+          },
+        },
+      }
+    },
+  },
   -- Various UI dependencies.
   {
     "MunifTanjim/nui.nvim",

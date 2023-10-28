@@ -50,3 +50,7 @@ vim.api.nvim_set_keymap("n", "k", "gk", { silent = true })
 -- Make MiniSurround work like vim-surround.
 vim.keymap.del('x', 'ys')
 vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+
+-- Buffers
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { silent = true })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { silent = true })
