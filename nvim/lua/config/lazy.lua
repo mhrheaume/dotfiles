@@ -113,7 +113,10 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
-      theme = "gruvbox"
+      options = {
+        globalstatus = true,
+        theme = "auto",
+      }
     }
   },
   -- Colors
