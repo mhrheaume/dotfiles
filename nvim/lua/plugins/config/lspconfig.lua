@@ -4,8 +4,11 @@ return function(_, _)
       Lua = {
         diagnostics = {
           globals = { "vim" }
-        }
-      }
-    }
+        },
+        workspace = {
+          checkThirdParty = false,
+        },
+      },
+    },
   })
 end
