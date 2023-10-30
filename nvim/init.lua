@@ -1,11 +1,11 @@
 require("config.lazy")
 
-vim.opt.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+
+vim.cmd([[colorscheme tokyonight]])
 
 -- General
-vim.opt.history = 700
 vim.opt.compatible = false
+vim.opt.history = 700
 vim.opt.hidden = true
 
 vim.opt.autoread = true
@@ -63,3 +63,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
   end
 })
+
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+ vim.lsp.handlers.hover, {
+   border = "single",
+ }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+ vim.lsp.handlers.signature_help, {
+   border = "single"
+ }
+)
