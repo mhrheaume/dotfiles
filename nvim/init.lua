@@ -52,8 +52,8 @@ vim.keymap.del('x', 'ys')
 vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
 
 -- Buffers
-vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { silent = true })
-vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { silent = true })
+vim.keymap.set('n', '[b', ':bnext<CR>', { silent = true })
+vim.keymap.set('n', ']b', ':bprev<CR>', { silent = true })
 
 -- LSP
 vim.api.nvim_create_autocmd("LspAttach", {
