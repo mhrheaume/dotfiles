@@ -11,4 +11,6 @@ return function(_, _)
       },
     },
   })
+
+  require("lspconfig").pyright.setup({})
 end
