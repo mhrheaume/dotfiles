@@ -14,6 +14,12 @@ return {
     opts = {},
   },
   {
+    'echasnovski/mini.bufremove',
+    event = "VeryLazy",
+    version = false,
+    opts = {},
+  },
+  {
     "echasnovski/mini.surround",
     opts = {
       -- Settings / keybindings from vim-surround.

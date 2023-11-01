@@ -54,6 +54,7 @@ vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent 
 -- Buffers
 vim.keymap.set('n', ']b', ':bnext<CR>', { silent = true })
 vim.keymap.set('n', '[b', ':bprev<CR>', { silent = true })
+vim.keymap.set('n', '<leader>bd', function() require('mini.bufremove').delete(0) end, { silent = true })
 
 -- LSP
 vim.api.nvim_create_autocmd("LspAttach", {
