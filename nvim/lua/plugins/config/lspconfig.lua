@@ -12,6 +12,13 @@ return function(_, _)
     },
   })
 
+  -- Python
   require("lspconfig").pyright.setup({})
   require("lspconfig").pyre.setup({})
+
+  -- Golang
+  require("lspconfig").gopls.setup({})
+
+  -- Rust
+  require("lspconfig").rust_analyzer.setup({})
 end
