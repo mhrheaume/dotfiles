@@ -32,6 +32,13 @@ vim.opt.smartindent = true
 vim.opt.listchars = "tab:>-"
 vim.opt.list = true
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
+})
+
 -- Navigation
 vim.opt.mouse = ""
 
@@ -68,7 +75,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
-
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
  vim.lsp.handlers.hover, {
    border = "single",
@@ -80,3 +86,4 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
    border = "single"
  }
 )
+
