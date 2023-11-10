@@ -64,6 +64,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gd', function() require("telescope.builtin").lsp_definitions({ reuse_win = true, show_line = false, path_display = { "tail" }}) end, opts)
     vim.keymap.set('n', 'gr', function() require("telescope.builtin").lsp_references({ reuse_win = true, show_line = false, path_display = { "tail" }})  end, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
   end
 })
 

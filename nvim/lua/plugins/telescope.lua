@@ -14,6 +14,7 @@ return {
     'nvim-lua/plenary.nvim'
   },
   keys = {
-    {"<leader>t", "<cmd>Telescope find_files<CR>", desc="Find files"},
+    {"<leader>t", function() require('telescope.builtin').find_files( { disable_coordinates = true }) end, desc="Find files"},
+    {"<leader>tg", function() require('telescope.builtin').live_grep({ disable_coordinates = true }) end, desc="Find string"},
   }
 }
