@@ -5,6 +5,20 @@ return {
   event = { "VeryLazy", "BufReadPost", "BufNewFile" },
   cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
   opts = {
+    ensure_installed = {
+      "bash",
+      "dockerfile",
+      "go",
+      "graphql",
+      "json",
+      "lua",
+      "luadoc",
+      "proto",
+      "python",
+      "rust",
+      "typescript",
+      "yaml"
+    },
     highlight = {
       enable = true,
       additional_vim_regex_highlighting = false,

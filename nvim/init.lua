@@ -27,7 +27,7 @@ vim.opt.tabstop=2
 vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.autoindent = true
-vim.opt.smartindent = true
+vim.opt.smartindent = false
 
 vim.opt.listchars = "tab:>-"
 vim.opt.list = true
