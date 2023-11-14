@@ -56,6 +56,11 @@ return {
 			},
 		},
 	},
+	-- Notifications
+	{
+		"j-hui/fidget.nvim",
+		opts = {},
+	},
 	-- Various UI dependencies.
 	{
 		"MunifTanjim/nui.nvim",

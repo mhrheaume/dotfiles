@@ -23,7 +23,7 @@ return function(_, _)
 			},
 		},
 	})
-	-- require("lspconfig").pyre.setup({})
+	require("lspconfig").pyre.setup({})
 
 	-- Golang
 	require("lspconfig").gopls.setup({})
