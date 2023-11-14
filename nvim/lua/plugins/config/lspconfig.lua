@@ -13,8 +13,17 @@ return function(_, _)
 	})
 
 	-- Python
-	require("lspconfig").pyright.setup({})
-	require("lspconfig").pyre.setup({})
+	require("lspconfig").pyright.setup({
+		settings = {
+			python = {
+				disableOrganizeImports = true,
+				analysis = {
+					diagnosticMode = "openFilesOnly",
+				},
+			},
+		},
+	})
+	-- require("lspconfig").pyre.setup({})
 
 	-- Golang
 	require("lspconfig").gopls.setup({})
