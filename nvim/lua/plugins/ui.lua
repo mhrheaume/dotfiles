@@ -59,7 +59,11 @@ return {
 	-- Notifications
 	{
 		"j-hui/fidget.nvim",
-		opts = {},
+		opts = {
+			notification = {
+				override_vim_notify = true,
+			},
+		},
 	},
 	-- Various UI dependencies.
 	{
