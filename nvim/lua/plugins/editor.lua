@@ -41,6 +41,34 @@ return {
 			search_method = "cover_or_next",
 		},
 	},
+	-- Diagnostics
+	{
+		"folke/trouble.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {},
+		keys = {
+			{
+				"<leader>xx",
+				function()
+					require("trouble").toggle()
+				end,
+			},
+			{
+				"<leader>xw",
+				function()
+					require("trouble").toggle("workspace_diagnostics")
+				end,
+			},
+			{
+				"<leader>xd",
+				function()
+					require("trouble").toggle("document_diagnostics")
+				end,
+			},
+		},
+	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		event = "VeryLazy",

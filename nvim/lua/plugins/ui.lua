@@ -65,6 +65,19 @@ return {
 			},
 		},
 	},
+	-- Diagnostics
+	{
+		"folke/trouble.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {},
+	},
+	-- Dressing
+	{
+		"stevearc/dressing.nvim",
+		opts = {},
+	},
 	-- Various UI dependencies.
 	{
 		"MunifTanjim/nui.nvim",

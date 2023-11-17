@@ -70,6 +70,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set({ "i", "n" }, "<C-k>", vim.lsp.buf.signature_help, opts)
 		vim.keymap.set("n", "gd", function()
 			require("telescope.builtin").lsp_definitions({
 				reuse_win = true,
@@ -94,6 +95,12 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 	border = "single",
+})
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	underline = true,
+	virtual_text = false,
+	signs = true,
 })
 
 -- Pyre is noisy.
