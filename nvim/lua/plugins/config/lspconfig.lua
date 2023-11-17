@@ -42,4 +42,7 @@ return function(_, _)
 	require("lspconfig").rust_analyzer.setup({
 		capabilities = capabilities,
 	})
+
+	-- Typescript
+	require("lspconfig").tsserver.setup({})
 end
