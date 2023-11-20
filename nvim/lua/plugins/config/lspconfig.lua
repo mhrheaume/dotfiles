@@ -8,9 +8,6 @@ return function(_, _)
 				diagnostics = {
 					globals = { "vim" },
 				},
-				workspace = {
-					checkThirdParty = false,
-				},
 			},
 		},
 	})

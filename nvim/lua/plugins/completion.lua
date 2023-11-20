@@ -54,6 +54,10 @@ return {
 		config = require("plugins.config.lspconfig"),
 	},
 	{
+		"folke/neodev.nvim",
+		opts = {},
+	},
+	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
@@ -61,11 +65,6 @@ return {
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		opts = {},
-	},
-	-- NVIM development.
-	{
-		"folke/neodev.nvim",
 		opts = {},
 	},
 }
