@@ -54,18 +54,21 @@ return {
 				function()
 					require("trouble").toggle()
 				end,
+				desc = "Toggle trouble",
 			},
 			{
 				"<leader>xw",
 				function()
 					require("trouble").toggle("workspace_diagnostics")
 				end,
+				desc = "Toggle workspace diagnostics",
 			},
 			{
 				"<leader>xd",
 				function()
 					require("trouble").toggle("document_diagnostics")
 				end,
+				desc = "Toggle document diagnostics",
 			},
 		},
 	},

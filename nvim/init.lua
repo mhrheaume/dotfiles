@@ -58,34 +58,44 @@ vim.keymap.del("x", "ys")
 vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
 
 -- Buffers
-vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true })
-vim.keymap.set("n", "[b", ":bprev<CR>", { silent = true })
+vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer", silent = true })
+vim.keymap.set("n", "[b", ":bprev<CR>", { desc = "Previous buffer", silent = true })
 vim.keymap.set("n", "<leader>bd", function()
 	require("mini.bufremove").delete(0)
-end, { silent = true })
+end, { desc = "Delete buffer", silent = true })
 
 -- LSP
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-		vim.keymap.set({ "i", "n" }, "<C-k>", vim.lsp.buf.signature_help, opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("error", opts, { desc = "Hover" }))
+		vim.keymap.set(
+			{ "i", "n" },
+			"<C-k>",
+			vim.lsp.buf.signature_help,
+			vim.tbl_extend("error", opts, { desc = "Signature help" })
+		)
 		vim.keymap.set("n", "gd", function()
 			require("telescope.builtin").lsp_definitions({
 				reuse_win = true,
 				show_line = false,
 				path_display = { "tail" },
 			})
-		end, opts)
+		end, vim.tbl_extend("error", opts, { desc = "Go to definition" }))
 		vim.keymap.set("n", "gr", function()
 			require("telescope.builtin").lsp_references({
 				reuse_win = true,
 				show_line = false,
 				path_display = { "tail" },
 			})
-		end, opts)
-		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+		end, vim.tbl_extend("error", opts, { desc = "Go to references" }))
+		vim.keymap.set(
+			"n",
+			"<leader>ca",
+			vim.lsp.buf.code_action,
+			vim.tbl_extend("error", opts, { desc = "Code actions" })
+		)
 	end,
 })
 
