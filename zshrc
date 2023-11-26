@@ -104,3 +104,8 @@ export NVM_DIR="$HOME/.nvm"
 # zoxide
 #############################
 eval "$(zoxide init zsh)"
+
+#############################
+# Per-machine
+#############################
+[[ -f "~/.zsh.local" ]] && source ~/.zsh.local
