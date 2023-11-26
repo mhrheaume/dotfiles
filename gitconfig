@@ -1,9 +1,11 @@
-# vim: ts=2 sw=2 noet
+# vim: noet
 [user]
 	name = Matthew Rheaume
-	email = me@example.com
+	email = mhrheaume@gmail.com
 [diff]
 	renames = true
+[grep]
+	lineNumber = true
 [color]
 	ui = true
 [http]
@@ -18,8 +20,9 @@
 	co = checkout
 	cob = checkout -b
 	s = status
-	r = rebase
-	rbm = rebase -i master
+	rb = rebase
+	rbm = rebase -i main
+	rbc = rebase --continue
 	m = merge
 	l = log
 	p = push origin
@@ -29,14 +32,15 @@
 	f = fetch
 	d = diff
 	dh = diff HEAD
-  dh1 = diff HEAD~1
-  dh2 = diff HEAD~2
+	dh1 = diff HEAD~1
+	dh2 = diff HEAD~2
 	ds = diff --staged
-	dm = !git diff $(git merge-base --fork-point master)
+	dm = !git diff $(git merge-base --fork-point main)
 	b = branch
 	ba = branch -a
 	bl = branch -l
 	bm = branch -m
+	bd = branch -D
 	lp = !git log --format=format:"%s"
 	files = show --pretty="format:" --name-only
 	history = log --follow -p
@@ -59,3 +63,8 @@
 	old = red 
 	new = green 
 	whitespace = red reverse
+[submodule]
+	recurse = true
+
+[include]
+    path = ~/.gitconfig.local
