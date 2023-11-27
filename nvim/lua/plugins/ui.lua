@@ -35,7 +35,15 @@ return {
 		opts = {
 			options = {
 				globalstatus = true,
-				theme = "auto",
+				theme = "tokyonight",
+			},
+			sections = {
+				lualine_c = {
+					{
+						"filename",
+						path = 1,
+					},
+				},
 			},
 		},
 	},

@@ -1,6 +1,6 @@
 require("config.lazy")
 
-vim.cmd([[colorscheme kanagawa]])
+vim.cmd([[colorscheme tokyonight]])
 
 -- General
 vim.opt.compatible = false
