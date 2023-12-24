@@ -64,13 +64,13 @@ return {
 			},
 		},
 	},
-	-- Notifications
+	-- Noice (Commandline, notifications, etc.)
 	{
-		"j-hui/fidget.nvim",
-		opts = {
-			notification = {
-				override_vim_notify = true,
-			},
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {},
+		dependencies = {
+			"nui.nvim",
 		},
 	},
 	-- Diagnostics
