@@ -22,4 +22,25 @@ config.mouse_wheel_scrolls_tabs = false
 -- Colors
 config.color_scheme = "Tokyo Night"
 
+-- Keybindings
+config.disable_default_key_bindings = true
+config.keys = {
+	-- New window
+	{
+		key = "n",
+		mods = "SUPER",
+		action = wezterm.action.SpawnWindow,
+	},
+	{
+		key = "c",
+		mods = "SUPER",
+		action = wezterm.action.CopyTo("Clipboard"),
+	},
+	{
+		key = "v",
+		mods = "SUPER",
+		action = wezterm.action.PasteFrom("Clipboard"),
+	},
+}
+
 return config
