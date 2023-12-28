@@ -132,7 +132,7 @@ config.keys = {
 	},
 	-- Close tab
 	{
-		key = "x",
+		key = "&",
 		mods = "LEADER",
 		action = wezterm.action.CloseCurrentTab({ confirm = false }),
 	},

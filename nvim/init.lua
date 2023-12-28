@@ -96,6 +96,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.buf.code_action,
 			vim.tbl_extend("error", opts, { desc = "Code actions" })
 		)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("error", opts, { desc = "Rename" }))
 	end,
 })
 
