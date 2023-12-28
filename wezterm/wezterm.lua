@@ -112,7 +112,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 end)
 
 -- Colors
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "Tokyo Night Storm"
 
 -- Keybindings
 config.leader = { key = "a", mods = "CTRL" }
