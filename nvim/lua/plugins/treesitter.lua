@@ -17,6 +17,7 @@ return {
 			"python",
 			"rust",
 			"typescript",
+			"vimdoc",
 			"yaml",
 		},
 		highlight = {

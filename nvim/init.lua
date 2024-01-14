@@ -90,6 +90,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				path_display = { "tail" },
 			})
 		end, vim.tbl_extend("error", opts, { desc = "Go to references" }))
+		vim.keymap.set("n", "gI", function()
+			require("telescope.builtin").lsp_implementations({
+				reuse_win = true,
+				show_line = false,
+				path_display = { "tail" },
+			})
+		end, vim.tbl_extend("error", opts, { desc = "Go to implementations" }))
 		vim.keymap.set(
 			"n",
 			"<leader>ca",
