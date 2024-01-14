@@ -11,8 +11,10 @@ config.font = wezterm.font_with_fallback({
 	"Fira Code",
 	{ family = "Symbols Nerd Font Mono", scale = 0.6 },
 })
-config.font_size = 11.0
+config.font_size = 12.0
 config.audible_bell = "Disabled"
+config.freetype_load_flags = "NO_HINTING"
+-- config.front_end = "OpenGL"
 
 config.window_padding = {
 	left = "0",
@@ -64,7 +66,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 			{ Foreground = ACTIVE_TAB_FG },
 			{
 				Text = " "
-					.. tab.tab_index
+					.. tab.tab_index + 1
 					.. " "
 					.. wezterm.nerdfonts.pl_left_soft_divider
 					.. " "
@@ -99,7 +101,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 			{ Foreground = INACTIVE_TAB_FG },
 			{
 				Text = " "
-					.. tab.tab_index
+					.. tab.tab_index + 1
 					.. " "
 					.. wezterm.nerdfonts.pl_left_soft_divider
 					.. " "
@@ -115,7 +117,7 @@ end)
 config.color_scheme = "Tokyo Night Storm"
 
 -- Keybindings
-config.leader = { key = "a", mods = "CTRL" }
+-- config.leader = { key = "a", mods = "CTRL" }
 config.disable_default_key_bindings = true
 config.keys = {
 	-- New window
@@ -125,71 +127,79 @@ config.keys = {
 		action = wezterm.action.SpawnWindow,
 	},
 	-- New tab
-	{
-		key = "c",
-		mods = "LEADER",
-		action = wezterm.action.SpawnTab("CurrentPaneDomain"),
-	},
-	-- Close tab
-	{
-		key = "&",
-		mods = "LEADER",
-		action = wezterm.action.CloseCurrentTab({ confirm = false }),
-	},
-	-- Previous tab
-	{
-		key = "p",
-		mods = "LEADER",
-		action = wezterm.action.ActivateTabRelative(-1),
-	},
-	-- Next tab
-	{
-		key = "n",
-		mods = "LEADER",
-		action = wezterm.action.ActivateTabRelative(1),
-	},
-	-- Move tab left
-	{
-		key = "p",
-		mods = "LEADER|CTRL",
-		action = wezterm.action.MoveTabRelative(-1),
-	},
-	-- Move tab right
-	{
-		key = "n",
-		mods = "LEADER|CTRL",
-		action = wezterm.action.MoveTabRelative(1),
-	},
-	{
-		key = ".",
-		mods = "LEADER",
-		action = wezterm.action.PromptInputLine({
-			description = "Enter new name for tab",
-			action = wezterm.action_callback(function(window, pane, line)
-				if line then
-					window:active_tab():set_title(line)
-				end
-			end),
-		}),
-	},
-	-- Copy
-	{
-		key = "c",
-		mods = "SUPER",
-		action = wezterm.action.CopyTo("Clipboard"),
-	},
-	-- Paste
-	{
-		key = "v",
-		mods = "SUPER",
-		action = wezterm.action.PasteFrom("Clipboard"),
-	},
-	-- Debug
-	{
-		key = "l",
-		mods = "CTRL",
-		action = wezterm.action.ShowDebugOverlay,
-	},
+	-- {
+	-- 	key = "c",
+	-- 	mods = "LEADER",
+	-- 	action = wezterm.action.SpawnTab("CurrentPaneDomain"),
+	-- },
+	-- -- Close tab
+	-- {
+	-- 	key = "&",
+	-- 	mods = "LEADER",
+	-- 	action = wezterm.action.CloseCurrentTab({ confirm = false }),
+	-- },
+	-- -- Previous tab
+	-- {
+	-- 	key = "p",
+	-- 	mods = "LEADER",
+	-- 	action = wezterm.action.ActivateTabRelative(-1),
+	-- },
+	-- -- Next tab
+	-- {
+	-- 	key = "n",
+	-- 	mods = "LEADER",
+	-- 	action = wezterm.action.ActivateTabRelative(1),
+	-- },
+	-- -- Move tab left
+	-- {
+	-- 	key = "p",
+	-- 	mods = "LEADER|CTRL",
+	-- 	action = wezterm.action.MoveTabRelative(-1),
+	-- },
+	-- -- Move tab right
+	-- {
+	-- 	key = "n",
+	-- 	mods = "LEADER|CTRL",
+	-- 	action = wezterm.action.MoveTabRelative(1),
+	-- },
+	-- {
+	-- 	key = ".",
+	-- 	mods = "LEADER",
+	-- 	action = wezterm.action.PromptInputLine({
+	-- 		description = "Enter new name for tab",
+	-- 		action = wezterm.action_callback(function(window, pane, line)
+	-- 			if line then
+	-- 				window:active_tab():set_title(line)
+	-- 			end
+	-- 		end),
+	-- 	}),
+	-- },
+	-- -- Copy
+	-- {
+	-- 	key = "c",
+	-- 	mods = "SUPER",
+	-- 	action = wezterm.action.CopyTo("Clipboard"),
+	-- },
+	-- -- Paste
+	-- {
+	-- 	key = "v",
+	-- 	mods = "SUPER",
+	-- 	action = wezterm.action.PasteFrom("Clipboard"),
+	-- },
+	-- -- Debug
+	-- {
+	-- 	key = "l",
+	-- 	mods = "CTRL",
+	-- 	action = wezterm.action.ShowDebugOverlay,
+	-- },
 }
+
+-- for i = 1, 8 do
+-- 	table.insert(config.keys, {
+-- 		key = tostring(i),
+-- 		mods = "LEADER",
+-- 		action = wezterm.action.ActivateTab(i - 1),
+-- 	})
+-- end
 
 return config
