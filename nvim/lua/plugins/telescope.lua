@@ -19,7 +19,14 @@ return {
 			function()
 				require("telescope.builtin").find_files({ disable_coordinates = true })
 			end,
-			desc = "Find files",
+			desc = "Find file",
+		},
+		{
+			"<leader>tb",
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			desc = "Find buffer",
 		},
 		{
 			"<leader>tg",
