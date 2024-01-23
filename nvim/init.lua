@@ -1,3 +1,5 @@
+vim.opt.termguicolors = true
+
 require("config.lazy")
 
 vim.cmd([[colorscheme tokyonight]])
@@ -76,6 +78,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.buf.signature_help,
 			vim.tbl_extend("error", opts, { desc = "Signature help" })
 		)
+		vim.keymap.set("n", "<leader>ts", function()
+			require("telescope.builtin").lsp_document_symbols({
+				symbol_width = 50,
+				symbols = { "class", "struct", "enum", "function", "method", "constant" },
+			})
+		end, vim.tbl_extend("error", opts, { desc = "Find symbol" }))
 		vim.keymap.set("n", "gd", function()
 			require("telescope.builtin").lsp_definitions({
 				reuse_win = true,

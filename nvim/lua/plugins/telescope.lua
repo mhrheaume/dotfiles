@@ -35,15 +35,5 @@ return {
 			end,
 			desc = "Find string",
 		},
-		{
-			"<leader>ts",
-			function()
-				require("telescope.builtin").lsp_document_symbols({
-					symbol_width = 50,
-					symbols = { "class", "struct", "enum", "function", "method", "constant" },
-				})
-			end,
-			desc = "Find symbol",
-		},
 	},
 }
