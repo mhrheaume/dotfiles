@@ -71,6 +71,7 @@ return {
 		opts = {},
 		dependencies = {
 			"nui.nvim",
+			"rcarriga/nvim-notify",
 		},
 	},
 	-- Diagnostics
@@ -87,6 +88,12 @@ return {
 		opts = {},
 	},
 	-- Various UI dependencies.
+	{
+		"rcarriga/nvim-notify",
+		opts = {
+			stages = "fade",
+		},
+	},
 	{
 		"MunifTanjim/nui.nvim",
 		lazy = true,
