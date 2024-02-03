@@ -74,6 +74,7 @@ alias grep='rg'
 
 alias g='git'
 alias k='kubectl'
+alias kc='kubectl --context'
 
 #############################
 # Local bin
@@ -108,4 +109,4 @@ eval "$(zoxide init zsh)"
 #############################
 # Per-machine
 #############################
-[[ -f "~/.zsh.local" ]] && source ~/.zsh.local
+[[ -f "$HOME/.zsh.local" ]] && source $HOME/.zsh.local
