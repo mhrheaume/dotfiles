@@ -67,4 +67,9 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		opts = {},
 	},
+	-- Copilot
+	{
+		"github/copilot.vim",
+		branch = "release",
+	},
 }
