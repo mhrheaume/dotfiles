@@ -9,9 +9,17 @@ return {
 		opts = {},
 	},
 	{
-		"echasnovski/mini.pairs",
-		event = "VeryLazy",
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
 		opts = {},
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		event = "InsertEnter",
+		opts = {},
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
 	},
 	{
 		"echasnovski/mini.bufremove",
