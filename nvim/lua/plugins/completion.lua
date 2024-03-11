@@ -29,6 +29,7 @@ return {
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				},
 				sources = cmp.config.sources({
+					{ name = "copilot", group_index = 1 },
 					{ name = "nvim_lsp", group_index = 1 },
 					{ name = "luasnip", group_index = 1 },
 					{ name = "path", group_index = 1 },
@@ -69,7 +70,13 @@ return {
 	},
 	-- Copilot
 	{
-		"github/copilot.vim",
-		branch = "release",
+		"zbirenbaum/copilot.lua",
+		opts = {},
+		cmd = "Copilot",
+		event = "InsertEnter",
+	},
+	{
+		"zbirenbaum/copilot-cmp",
+		opts = {},
 	},
 }
