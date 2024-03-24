@@ -19,9 +19,16 @@ return {
 			{
 				"<leader>be",
 				function()
-					require("neo-tree.command").execute({ source = "buffers", toggle = true })
+					require("neo-tree.command").execute({ toggle = true, source = "buffers" })
 				end,
 				desc = "Buffer Explorer",
+			},
+			{
+				"<leader>fr",
+				function()
+					require("neo-tree.command").execute({ dir = vim.loop.cwd(), reveal = true })
+				end,
+				desc = "File Explorer (Current File)",
 			},
 		},
 	},
