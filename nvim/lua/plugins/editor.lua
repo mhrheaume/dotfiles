@@ -94,7 +94,10 @@ return {
 					vim.keymap.set(mode, l, r, opts)
 				end
 
-				map("n", "<leader>hb", gs.toggle_current_line_blame, { desc = "Git blame" })
+				map("n", "<leader>hb", function()
+					gs.blame_line({ full = true })
+				end, { desc = "Git blame" })
+				map("n", "<leader>hl", gs.toggle_current_line_blame, { desc = "Git blame line" })
 				map("n", "<leader>hp", gs.preview_hunk, { desc = "Git preview" })
 			end,
 		},
