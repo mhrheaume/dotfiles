@@ -6,6 +6,6 @@ return {
 	},
 	{
 		"almo7aya/openingh.nvim",
-		cmd = { "OpenInGHRepo", "OpenINGHFile", "OpenInGHFileLines" },
+		cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
 	},
 }
