@@ -8,6 +8,7 @@ vim.cmd([[colorscheme tokyonight]])
 vim.opt.compatible = false
 vim.opt.history = 700
 vim.opt.hidden = true
+vim.opt.splitright = true
 
 vim.opt.autoread = true
 vim.opt.autowrite = true
