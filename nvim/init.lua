@@ -41,6 +41,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = {
+		"*/GRAPHITE_PR_DESCRIPTION.md",
+	},
+	command = "set tw=72",
+})
+
 -- Navigation
 vim.opt.mouse = ""
 
