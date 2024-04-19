@@ -34,12 +34,20 @@ vim.opt.smartindent = false
 vim.opt.listchars = "tab:-->"
 vim.opt.list = true
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
+vim.api.nvim_create_user_command("FormatDisable", function(_)
+	---@diagnostic disable-next-line: inject-field
+	vim.b.disable_autoformat = true
+end, {
+	desc = "Disable autoformatting",
 })
+
+vim.api.nvim_create_user_command("FormatEnable", function(_)
+	---@diagnostic disable-next-line: inject-field
+	vim.b.disable_autoformat = false
+end, {
+	desc = "Disable autoformatting",
+})
+
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = {
