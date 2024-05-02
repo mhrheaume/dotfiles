@@ -23,3 +23,6 @@ style = "Bold Italic"
 
 [env]
 term = "alacritty"
+
+[window]
+option_as_alt = "Both"
