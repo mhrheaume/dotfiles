@@ -51,6 +51,19 @@ return {
 						path = 1,
 					},
 				},
+				lualine_x = {
+					{
+						function()
+							return ("󰻂 Recording [%s]"):format(vim.fn.reg_recording())
+						end,
+						cond = function()
+							return vim.fn.reg_recording() ~= ""
+						end,
+					},
+					"encoding",
+					"fileformat",
+					"filetype",
+				},
 			},
 		},
 	},
