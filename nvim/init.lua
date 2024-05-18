@@ -26,6 +26,7 @@ vim.opt.completeopt:remove({ "preview" })
 -- Formatting
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
+vim.opt.textwidth = 100
 vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.autoindent = true
