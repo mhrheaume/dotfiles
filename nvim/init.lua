@@ -49,7 +49,6 @@ end, {
 	desc = "Disable autoformatting",
 })
 
-
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = {
 		"*/GRAPHITE_PR_DESCRIPTION.md",
@@ -86,8 +85,16 @@ end, { desc = "Delete buffer", silent = true })
 -- LSP
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-	callback = function(ev)
-		local opts = { buffer = ev.buf }
+	callback = function(args)
+		local opts = { buffer = args.buf }
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+		if client ~= nil and client.server_capabilities.inlayHintProvider then
+			vim.keymap.set("n", "<leader>ti", function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			end, vim.tbl_extend("error", opts, { desc = "Toggle inlay hints" }))
+		end
+
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("error", opts, { desc = "Hover" }))
 		vim.keymap.set(
 			{ "i", "n" },

@@ -5,6 +5,9 @@ return function(_, _)
 		capabilities = capabilities,
 		settings = {
 			Lua = {
+				hint = {
+					enable = true,
+				},
 				diagnostics = {
 					globals = { "vim" },
 				},
@@ -33,6 +36,14 @@ return function(_, _)
 	-- Golang
 	require("lspconfig").gopls.setup({
 		capabilities = capabilities,
+		settings = {
+			gopls = {
+				hints = {
+					assignVariableTypes = true,
+					parameterNames = true,
+				},
+			},
+		},
 	})
 
 	-- Rust
@@ -41,5 +52,19 @@ return function(_, _)
 	})
 
 	-- Typescript
-	require("lspconfig").tsserver.setup({})
+	require("lspconfig").tsserver.setup({
+		capabilities = capabilities,
+		init_options = {
+			preferences = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
+				importModuleSpecifierPreference = "non-relative",
+			},
+		},
+	})
 end
