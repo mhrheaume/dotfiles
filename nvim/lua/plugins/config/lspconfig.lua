@@ -33,6 +33,10 @@ return function(_, _)
 		cmd = { "pyre", "persistent" },
 	})
 
+	require("lspconfig").ruff.setup({
+		capabilities = capabilities,
+	})
+
 	-- Golang
 	require("lspconfig").gopls.setup({
 		capabilities = capabilities,
