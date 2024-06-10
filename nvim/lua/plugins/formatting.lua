@@ -13,7 +13,7 @@ return {
 			typescriptreact = { "prettier" },
 		},
 		format_on_save = function(bufnr)
-			if vim.b[bufnr].disable_autoformat then
+			if vim.b[bufnr].disable_autoformat or vim.g.disable_autoformat then
 				return
 			end
 			return { timeout_ms = 500, lsp_fallback = true }

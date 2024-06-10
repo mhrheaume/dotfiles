@@ -10,9 +10,6 @@ vim.opt.history = 700
 vim.opt.hidden = true
 vim.opt.splitright = true
 
-vim.opt.autoread = true
-vim.opt.autowrite = true
-
 -- UI
 vim.opt.ignorecase = true
 vim.opt.number = true
@@ -37,14 +34,14 @@ vim.opt.list = true
 
 vim.api.nvim_create_user_command("FormatDisable", function(_)
 	---@diagnostic disable-next-line: inject-field
-	vim.b.disable_autoformat = true
+	vim.g.disable_autoformat = true
 end, {
 	desc = "Disable autoformatting",
 })
 
 vim.api.nvim_create_user_command("FormatEnable", function(_)
 	---@diagnostic disable-next-line: inject-field
-	vim.b.disable_autoformat = false
+	vim.g.disable_autoformat = false
 end, {
 	desc = "Disable autoformatting",
 })
@@ -91,7 +88,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		if client ~= nil and client.server_capabilities.inlayHintProvider then
 			vim.keymap.set("n", "<leader>ti", function()
-				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
 			end, vim.tbl_extend("error", opts, { desc = "Toggle inlay hints" }))
 		end
 
