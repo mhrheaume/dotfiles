@@ -8,6 +8,7 @@ return {
 			lua = { "stylua" },
 			python = { "black", "ruff_fix" },
 			javascript = { "prettier" },
+			json = { "jq" },
 			sh = { "shfmt" },
 			typescript = { "prettier" },
 			typescriptreact = { "prettier" },
