@@ -94,14 +94,6 @@ return {
 			"rcarriga/nvim-notify",
 		},
 	},
-	-- Diagnostics
-	{
-		"folke/trouble.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		opts = {},
-	},
 	-- Dressing
 	{
 		"stevearc/dressing.nvim",
