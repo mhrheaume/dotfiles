@@ -83,6 +83,18 @@ return {
 				},
 			},
 		},
+		keys = {
+			{
+				"<leader>bp",
+				":BufferLineTogglePin<CR>",
+				desc = "Pin buffer",
+			},
+			{
+				"<leader>bs",
+				":BufferLinePick<CR>",
+				desc = "Select buffer",
+			},
+		},
 	},
 	-- Noice (Commandline, notifications, etc.)
 	{
