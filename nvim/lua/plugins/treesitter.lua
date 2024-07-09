@@ -29,16 +29,10 @@ return {
 			indent = { enable = true },
 			autotag = { enable = true },
 		},
-		dependencies = {
-			"windwp/nvim-ts-autotag",
-		},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
-		end,
 	},
 	{
 		"windwp/nvim-ts-autotag",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {},
 	},
 }
