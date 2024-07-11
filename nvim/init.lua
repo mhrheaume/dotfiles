@@ -23,7 +23,6 @@ vim.opt.completeopt:remove({ "preview" })
 -- Formatting
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
-vim.opt.textwidth = 100
 vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.autoindent = true
@@ -73,8 +72,6 @@ vim.keymap.del("x", "ys")
 vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
 
 -- Buffers
-vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer", silent = true })
-vim.keymap.set("n", "[b", ":bprev<CR>", { desc = "Previous buffer", silent = true })
 vim.keymap.set("n", "<leader>bd", function()
 	require("mini.bufremove").delete(0)
 end, { desc = "Delete buffer", silent = true })

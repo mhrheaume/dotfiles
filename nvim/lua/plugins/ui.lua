@@ -85,6 +85,16 @@ return {
 		},
 		keys = {
 			{
+				"[b",
+				":BufferLineCyclePrev<CR>",
+				desc = "Previous buffer",
+			},
+			{
+				"]b",
+				":BufferLineCycleNext<CR>",
+				desc = "Next buffer",
+			},
+			{
 				"<leader>bp",
 				":BufferLineTogglePin<CR>",
 				desc = "Pin buffer",
