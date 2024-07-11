@@ -71,6 +71,7 @@ alias ls='eza'
 alias cat='bat'
 alias find='fd'
 alias grep='rg'
+alias copilot='gh copilot'
 
 alias g='git'
 alias k='kubectl'
