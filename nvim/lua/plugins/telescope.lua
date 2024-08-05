@@ -15,7 +15,7 @@ return {
 	},
 	keys = {
 		{
-			"<leader>t",
+			"<leader>tt",
 			function()
 				require("telescope.builtin").find_files({ disable_coordinates = true })
 			end,
