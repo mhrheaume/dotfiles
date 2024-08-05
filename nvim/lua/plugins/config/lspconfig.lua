@@ -16,15 +16,16 @@ return function(_, _)
 	})
 
 	-- Python
-	require("lspconfig").pyright.setup({
+	require("lspconfig").basedpyright.setup({
 		capabilities = capabilities,
 		settings = {
-			python = {
-				disableOrganizeImports = true,
+			basedpyright = {
 				analysis = {
+					autoSearchPaths = true,
 					diagnosticMode = "openFilesOnly",
-					typeCheckingMode = "off",
+					useLibraryCodeForTypes = true,
 				},
+				typeCheckingMode = "off",
 			},
 		},
 	})
