@@ -64,8 +64,8 @@ vim.api.nvim_set_keymap("n", "<Left>", "<NOP>", { silent = true, noremap = true 
 vim.api.nvim_set_keymap("i", "<Right>", "<NOP>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<Right>", "<NOP>", { silent = true, noremap = true })
 
-vim.api.nvim_set_keymap("n", "j", "gj", { silent = true })
-vim.api.nvim_set_keymap("n", "k", "gk", { silent = true })
+-- vim.api.nvim_set_keymap("n", "j", "gj", { silent = true })
+-- vim.api.nvim_set_keymap("n", "k", "gk", { silent = true })
 
 -- Make MiniSurround work like vim-surround.
 vim.keymap.del("x", "ys")
