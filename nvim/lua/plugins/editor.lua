@@ -60,7 +60,7 @@ return {
 			{
 				"<leader>xd",
 				function()
-					require("trouble").toggle("diagnostics")
+					require("trouble").toggle({ mode = "diagnostics", filter = { buf = 0 } })
 				end,
 				desc = "Toggle document diagnostics",
 			},

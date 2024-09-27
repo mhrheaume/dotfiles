@@ -6,9 +6,10 @@ return {
 		formatters_by_ft = {
 			bzl = { "buildifier" },
 			lua = { "stylua" },
-			python = { "black", "ruff_fix" },
 			javascript = { "prettier" },
 			json = { "jq" },
+			python = { "black", "ruff_fix" },
+			rust = { "rustfmt" },
 			sh = { "shfmt" },
 			typescript = { "prettier" },
 			typescriptreact = { "prettier" },
