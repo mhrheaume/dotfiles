@@ -57,7 +57,7 @@ return function(_, _)
 	})
 
 	-- Typescript
-	require("lspconfig").tsserver.setup({
+	require("lspconfig").ts_ls.setup({
 		capabilities = capabilities,
 		init_options = {
 			preferences = {
