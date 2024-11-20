@@ -61,7 +61,7 @@ autoload -Uz colors
 colors
 
 setopt PROMPT_SUBST
-PS1='%{$fg[blue]%}%c%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) %{$fg[blue]%}λ%{$reset_color%} '
+PS1='%{$fg[blue]%}%d%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) %{$fg[blue]%}λ%{$reset_color%} '
 
 #############################
 # Aliases
