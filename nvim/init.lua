@@ -28,7 +28,7 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = false
 
-vim.opt.listchars = "tab:-->"
+vim.opt.listchars = "tab:-->,trail:~,nbsp:␣"
 vim.opt.list = true
 
 vim.api.nvim_create_user_command("FormatDisable", function(_)
