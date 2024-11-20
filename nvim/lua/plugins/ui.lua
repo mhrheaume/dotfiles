@@ -115,6 +115,13 @@ return {
 			"nui.nvim",
 			"rcarriga/nvim-notify",
 		},
+		keys = {
+			{
+				"<leader>nd",
+				":Noice dismiss<CR>",
+				desc = "Dismiss all notifications.",
+			},
+		},
 	},
 	-- Dressing
 	{

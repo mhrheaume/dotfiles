@@ -64,6 +64,13 @@ return {
 				end,
 				desc = "Toggle document diagnostics",
 			},
+			{
+				"<leader>xD",
+				function()
+					require("trouble").toggle({ mode = "diagnostics" })
+				end,
+				desc = "Toggle diagnostics",
+			},
 		},
 	},
 	-- Git
