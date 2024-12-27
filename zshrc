@@ -10,6 +10,8 @@ bindkey '^R' history-incremental-pattern-search-backward
 export VISUAL=nvim
 export EDITOR=nvim
 
+export XDG_CONFIG_HOME=$HOME/.config
+
 export SAVEHIST=100000
 export HISTSIZE=$SAVEHIST
 
