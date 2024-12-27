@@ -18,7 +18,7 @@ return {
 			if vim.b[bufnr].disable_autoformat or vim.g.disable_autoformat then
 				return
 			end
-			return { timeout_ms = 500, lsp_fallback = true }
+			return { timeout_ms = 5000, lsp_fallback = true }
 		end,
 		formatters = {
 			shfmt = {
