@@ -1,5 +1,7 @@
+adjust-cell-width = "-5%"
 font-family = "FiraCode Nerd Font"
 font-size = 12
+font-thicken = true
 macos-option-as-alt = true
 theme = "tokyonight-storm"
 title = "👻"
