@@ -5,6 +5,7 @@ return {
 	opts = {
 		formatters_by_ft = {
 			bzl = { "buildifier" },
+			go = { "gofmt", "goimports" },
 			lua = { "stylua" },
 			javascript = { "prettier" },
 			json = { "jq" },
