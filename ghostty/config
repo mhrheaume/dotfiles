@@ -1,7 +1,17 @@
+# General
+theme = "tokyonight-storm"
+title = "👻"
+
+# Font
 adjust-cell-width = "-10%"
 font-family = "FiraCode Nerd Font"
 font-size = 12
 font-thicken = true
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = true
+shell-integration-features = no-cursor
+
+# Keybindings
 macos-option-as-alt = true
-theme = "tokyonight-storm"
-title = "👻"
