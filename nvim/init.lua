@@ -18,7 +18,17 @@ vim.opt.showmatch = true
 vim.opt.ruler = true
 vim.opt.mat = 2
 vim.opt.showmode = false
-vim.opt.completeopt:remove({ "preview" })
+vim.opt.completeopt:remove("preview")
+
+vim.api.nvim_create_augroup("Shape", {
+	clear = false,
+})
+vim.api.nvim_create_autocmd("VimLeave", {
+	group = "Shape",
+	callback = function()
+		vim.opt.guicursor = "a:ver90"
+	end,
+})
 
 -- Formatting
 vim.opt.shiftwidth = 4
