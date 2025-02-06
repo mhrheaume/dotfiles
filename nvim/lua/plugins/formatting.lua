@@ -9,7 +9,7 @@ return {
 			lua = { "stylua" },
 			javascript = { "prettier" },
 			json = { "jq" },
-			python = { "black", "ruff_fix" },
+			python = { "black", "isort", "ruff_fix" },
 			rust = { "rustfmt" },
 			sh = { "shfmt" },
 			typescript = { "prettier" },
