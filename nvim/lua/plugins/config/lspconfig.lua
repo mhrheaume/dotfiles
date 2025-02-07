@@ -55,6 +55,13 @@ return function(_, _)
 	-- Rust
 	require("lspconfig").rust_analyzer.setup({
 		capabilities = capabilities,
+		settings = {
+			["rust-analyzer"] = {
+				check = {
+					command = "clippy",
+				},
+			},
+		},
 	})
 
 	-- Typescript
