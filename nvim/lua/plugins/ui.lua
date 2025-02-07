@@ -110,7 +110,11 @@ return {
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			lsp = {
+				hover = { silent = true },
+			},
+		},
 		dependencies = {
 			"nui.nvim",
 			"rcarriga/nvim-notify",
