@@ -48,6 +48,7 @@ return function(_, _)
 					assignVariableTypes = true,
 					parameterNames = true,
 				},
+				gofumpt = true,
 			},
 		},
 	})
@@ -79,5 +80,19 @@ return function(_, _)
 				importModuleSpecifierPreference = "non-relative",
 			},
 		},
+	})
+
+	require("lspconfig").eslint.setup({
+		packageManager = "yarn",
+		on_attach = function(_, bufnr)
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				buffer = bufnr,
+				command = "EslintFixAll",
+			})
+		end,
+	})
+
+	require("lspconfig").clangd.setup({
+		capabilities = capabilities,
 	})
 end
