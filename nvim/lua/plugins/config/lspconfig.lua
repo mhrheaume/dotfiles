@@ -92,7 +92,14 @@ return function(_, _)
 		end,
 	})
 
+	-- C/C++
 	require("lspconfig").clangd.setup({
+		capabilities = capabilities,
+		filetypes = { "c", "cpp" },
+	})
+
+	-- Protobuf
+	require("lspconfig").buf_ls.setup({
 		capabilities = capabilities,
 	})
 end
