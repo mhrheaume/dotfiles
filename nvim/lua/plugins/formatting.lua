@@ -5,13 +5,15 @@ return {
 	opts = {
 		formatters_by_ft = {
 			bzl = { "buildifier" },
-			go = { "gofmt", "goimports" },
+			go = { "gofumpt" },
 			lua = { "stylua" },
 			javascript = { "prettier" },
 			json = { "jq" },
-			python = { "black", "isort", "ruff_fix" },
+			python = { "ruff_format", "ruff_fix" },
 			rust = { "rustfmt" },
 			sh = { "shfmt" },
+			terraform = { "terraform_fmt" },
+			["terraform-vars"] = { "terraform_fmt" },
 			typescript = { "prettier" },
 			typescriptreact = { "prettier" },
 		},
@@ -24,6 +26,11 @@ return {
 		formatters = {
 			shfmt = {
 				prepend_args = { "-i", "4" },
+			},
+			rustfmt = {
+				options = {
+					default_edition = "2024",
+				},
 			},
 		},
 	},
