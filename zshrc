@@ -76,6 +76,7 @@ alias grep='rg'
 alias copilot='gh copilot'
 
 alias g='git'
+alias tf='terraform'
 alias k='kubectl'
 alias kc='kubectl --context'
 
