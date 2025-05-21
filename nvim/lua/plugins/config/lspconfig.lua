@@ -48,9 +48,12 @@ return function(_, _)
 					assignVariableTypes = true,
 					parameterNames = true,
 				},
-				gofumpt = true,
 			},
 		},
+	})
+
+	require("lspconfig").golangci_lint_ls.setup({
+		capabilities = capabilities,
 	})
 
 	-- Rust
