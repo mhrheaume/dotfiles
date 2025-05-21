@@ -57,9 +57,16 @@ end, {
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = {
+		"*/COMMIT_EDITMSG",
+	},
+	command = "setlocal spell spelllang=en_us",
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = {
 		"*/GRAPHITE_PR_DESCRIPTION.md",
 	},
-	command = "set tw=72",
+	command = "setlocal tw=72 spell spelllang=en_us",
 })
 
 -- Navigation
