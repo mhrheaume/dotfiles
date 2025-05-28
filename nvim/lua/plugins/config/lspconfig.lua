@@ -1,7 +1,7 @@
 return function(_, _)
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-	require("lspconfig").lua_ls.setup({
+	vim.lsp.config("lua_ls", {
 		capabilities = capabilities,
 		settings = {
 			Lua = {
@@ -16,30 +16,32 @@ return function(_, _)
 	})
 
 	-- Python
-	require("lspconfig").basedpyright.setup({
+	vim.lsp.config("basedpyright", {
 		capabilities = capabilities,
 		settings = {
 			basedpyright = {
 				analysis = {
 					autoSearchPaths = true,
 					diagnosticMode = "openFilesOnly",
+					typeCheckingMode = "off",
 					useLibraryCodeForTypes = true,
 				},
-				typeCheckingMode = "off",
 			},
 		},
 	})
-	require("lspconfig").pyre.setup({
+
+	vim.lsp.enable("pyre")
+	vim.lsp.config("pyre", {
 		capabilities = capabilities,
-		cmd = { "pyre", "persistent" },
 	})
 
-	require("lspconfig").ruff.setup({
+	vim.lsp.enable("ruff")
+	vim.lsp.config("ruff", {
 		capabilities = capabilities,
 	})
 
 	-- Golang
-	require("lspconfig").gopls.setup({
+	vim.lsp.config("gopls", {
 		capabilities = capabilities,
 		settings = {
 			gopls = {
@@ -52,12 +54,12 @@ return function(_, _)
 		},
 	})
 
-	require("lspconfig").golangci_lint_ls.setup({
+	vim.lsp.config("golangci_lint_ls", {
 		capabilities = capabilities,
 	})
 
 	-- Rust
-	require("lspconfig").rust_analyzer.setup({
+	vim.lsp.config("rust_analyzer", {
 		capabilities = capabilities,
 		settings = {
 			["rust-analyzer"] = {
@@ -69,7 +71,7 @@ return function(_, _)
 	})
 
 	-- Typescript
-	require("lspconfig").ts_ls.setup({
+	vim.lsp.config("ts_ls", {
 		capabilities = capabilities,
 		init_options = {
 			preferences = {
@@ -85,7 +87,7 @@ return function(_, _)
 		},
 	})
 
-	require("lspconfig").eslint.setup({
+	vim.lsp.config("eslint", {
 		packageManager = "yarn",
 		on_attach = function(_, bufnr)
 			vim.api.nvim_create_autocmd("BufWritePre", {
@@ -96,13 +98,13 @@ return function(_, _)
 	})
 
 	-- C/C++
-	require("lspconfig").clangd.setup({
+	vim.lsp.config("clangd", {
 		capabilities = capabilities,
 		filetypes = { "c", "cpp" },
 	})
 
 	-- Protobuf
-	require("lspconfig").buf_ls.setup({
+	vim.lsp.config("buf_ls", {
 		capabilities = capabilities,
 	})
 end
