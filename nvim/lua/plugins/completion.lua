@@ -1,47 +1,33 @@
 return {
 	-- Completion
 	{
-		"hrsh7th/nvim-cmp",
-		version = false,
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
+		"saghen/blink.cmp",
+		version = "1.*",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		opts = {
+			cmdline = { enabled = false },
+			completion = {
+				menu = {
+					draw = {
+						columns = {
+							{ "label", "label_description", gap = 1 },
+							{ "kind_icon", "kind", gap = 1 },
+							{ "source_name" },
+						},
+					},
+				},
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 0,
+				},
+			},
+			keymap = { preset = "enter" },
+			signature = { enabled = true },
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
 		},
-		opts = function()
-			local cmp = require("cmp")
-
-			return {
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				mapping = {
-					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				},
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp", group_index = 1 },
-					{ name = "luasnip", group_index = 1 },
-					{ name = "path", group_index = 1 },
-					{ name = "buffer", group_index = 2 },
-				}),
-			}
-		end,
-	},
-	-- Snippets
-	{
-		"L3MON4D3/LuaSnip",
-		version = "v2.*",
-		-- build = "make install_jsregexp"
+		opts_extend = { "sources.default" },
 	},
 	-- LSP
 	{
@@ -73,7 +59,7 @@ return {
 		opts = {
 			suggestion = {
 				auto_trigger = true,
-			}
+			},
 		},
 		cmd = "Copilot",
 		event = "InsertEnter",
