@@ -19,6 +19,7 @@ vim.opt.ruler = true
 vim.opt.mat = 2
 vim.opt.showmode = false
 vim.opt.completeopt:remove("preview")
+vim.opt.winborder = "single"
 
 vim.api.nvim_create_augroup("Shape", {
 	clear = false,

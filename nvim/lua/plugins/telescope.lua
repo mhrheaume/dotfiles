@@ -1,5 +1,10 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	opts = {
+		defaults = {
+			border = false,
+		},
+	},
 	dependencies = {
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
