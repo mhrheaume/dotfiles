@@ -10,12 +10,11 @@ return {
 		},
 	},
 	{
-		"rebelot/kanagawa.nvim",
+		"catppuccin/nvim",
 		priority = 1000,
 	},
 	{
-		"sainnhe/gruvbox-material",
+		"rebelot/kanagawa.nvim",
 		priority = 1000,
-		config = true,
 	},
 }

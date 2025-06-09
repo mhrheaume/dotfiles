@@ -2,7 +2,7 @@ vim.opt.termguicolors = true
 
 require("config.lazy")
 
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme catppuccin-macchiato]])
 
 -- General
 vim.opt.compatible = false

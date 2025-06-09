@@ -42,7 +42,7 @@ return {
 		opts = {
 			options = {
 				globalstatus = true,
-				theme = "tokyonight",
+				theme = "catppuccin-macchiato",
 			},
 			sections = {
 				lualine_c = {
