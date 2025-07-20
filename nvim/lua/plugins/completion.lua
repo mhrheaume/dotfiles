@@ -64,9 +64,4 @@ return {
 		cmd = "Copilot",
 		event = "InsertEnter",
 	},
-	{
-		"zbirenbaum/copilot-cmp",
-		opts = {},
-		enabled = false,
-	},
 }
