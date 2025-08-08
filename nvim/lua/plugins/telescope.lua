@@ -21,7 +21,7 @@ return {
 		{
 			"<leader>tt",
 			function()
-				require("telescope.builtin").find_files({ disable_coordinates = true })
+				require("telescope.builtin").find_files({ disable_coordinates = true, hidden = true })
 			end,
 			desc = "Find file",
 		},
@@ -35,7 +35,12 @@ return {
 		{
 			"<leader>tg",
 			function()
-				require("telescope.builtin").live_grep({ disable_coordinates = true })
+				require("telescope.builtin").live_grep({
+					disable_coordinates = true,
+					additional_args = function(_)
+						return { "--hidden" }
+					end,
+				})
 			end,
 			desc = "Find string",
 		},
