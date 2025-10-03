@@ -34,8 +34,8 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.helm.zsh ] && source ~/.helm.zsh
+[ fzf > /dev/null 2>&1 ] && source <(fzf --zsh)
+[ helm > /dev/null 2>&1 ] && source <(helm completion zsh)
 
 _gt_yargs_completions()
 {
