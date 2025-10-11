@@ -28,14 +28,15 @@ bindkey -M vicmd v edit-command-line
 # Autocompletion
 #############################
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  eval "$(brew shellenv)"
 
   autoload -Uz compinit
   compinit
 fi
 
+# Most programs installed through brew will be captured by $(brew shellenv) above; fzf is the
+# only one we need to configure manually.
 [ fzf > /dev/null 2>&1 ] && source <(fzf --zsh)
-[ helm > /dev/null 2>&1 ] && source <(helm completion zsh)
 
 _gt_yargs_completions()
 {
@@ -86,11 +87,9 @@ alias kc='kubectl --context'
 export PATH=$HOME/bin:$PATH
 
 #############################
-# Python
+# Mise
 #############################
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+eval "$(mise activate zsh)"
 
 #############################
 # Go
@@ -99,8 +98,13 @@ export GOPATH=~/go
 export PATH=$GOPATH/bin:$PATH
 
 ###############################
-# Python / uv
+# Python
 ###############################
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 uvsh() {
     local venv_name=${1:-'.venv'}
     venv_name=${venv_name//\//} # remove trailing slashes (Linux)
@@ -141,6 +145,11 @@ compdef _uv_run_mod uv
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+#############################
+# Rust
+#############################
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 #############################
 # zoxide
