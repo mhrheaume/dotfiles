@@ -60,6 +60,7 @@ return {
 			suggestion = {
 				auto_trigger = true,
 			},
+			copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.20.0/bin/node",
 		},
 		cmd = "Copilot",
 		event = "InsertEnter",
