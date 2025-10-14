@@ -55,14 +55,26 @@ return {
 	},
 	-- Copilot
 	{
-		"zbirenbaum/copilot.lua",
-		opts = {
-			suggestion = {
-				auto_trigger = true,
-			},
-			copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.20.0/bin/node",
-		},
+		"github/copilot.vim",
 		cmd = "Copilot",
 		event = "InsertEnter",
+		config = function()
+			vim.keymap.set("i", "<M-l>", 'copilot#Accept("\\<CR>")', {
+				expr = true,
+				replace_keycodes = false,
+			})
+			vim.g.copilot_no_tab_map = true
+		end,
 	},
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	opts = {
+	-- 		suggestion = {
+	-- 			auto_trigger = true,
+	-- 		},
+	-- 		copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.20.0/bin/node",
+	-- 	},
+	-- 	cmd = "Copilot",
+	-- 	event = "InsertEnter",
+	-- },
 }
