@@ -64,6 +64,7 @@ return {
 				replace_keycodes = false,
 			})
 			vim.g.copilot_no_tab_map = true
+			vim.g.copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.20.0/bin/node"
 		end,
 	},
 	-- {
