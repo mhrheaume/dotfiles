@@ -6,6 +6,9 @@ return {
 		dependencies = { "rafamadriz/friendly-snippets" },
 		opts = {
 			cmdline = { enabled = false },
+			enabled = function()
+				return not vim.tbl_contains({ "markdown" }, vim.bo.filetype)
+			end,
 			completion = {
 				menu = {
 					draw = {
