@@ -9,26 +9,19 @@ return {
 		opts = {},
 	},
 	{
-		"windwp/nvim-autopairs",
+		"nvim-mini/mini.pairs",
 		event = "InsertEnter",
+		version = false,
 		opts = {},
 	},
 	{
-		"windwp/nvim-ts-autotag",
-		event = "InsertEnter",
-		opts = {},
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-	},
-	{
-		"echasnovski/mini.bufremove",
+		"nvim-mini/mini.bufremove",
 		event = "VeryLazy",
 		version = false,
 		opts = {},
 	},
 	{
-		"echasnovski/mini.surround",
+		"nvim-mini/mini.surround",
 		opts = {
 			-- Settings / keybindings from vim-surround.
 			custom_surroundings = {
