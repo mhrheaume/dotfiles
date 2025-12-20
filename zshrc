@@ -79,6 +79,7 @@ alias copilot='gh copilot'
 
 alias g='git'
 alias tf='terraform'
+alias tg='terragrunt'
 alias k='kubectl'
 alias kc='kubectl --context'
 
@@ -139,6 +140,12 @@ _uv_run_mod() {
     fi
 }
 compdef _uv_run_mod uv
+
+#############################
+# Google Cloud
+#############################
+if [ -f '/Users/mhr/workspace/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mhr/workspace/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/mhr/workspace/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mhr/workspace/google-cloud-sdk/completion.zsh.inc'; fi
 
 #############################
 # Node
