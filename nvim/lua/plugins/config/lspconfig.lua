@@ -45,7 +45,7 @@ return function(_, _)
 		capabilities = capabilities,
 		settings = {
 			gopls = {
-				buildFlags = { "-tags=integration" },
+				buildFlags = { "-tags=integration,lightspark" },
 				hints = {
 					assignVariableTypes = true,
 					parameterNames = true,
