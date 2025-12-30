@@ -73,9 +73,6 @@ PS1='%{$fg[blue]%}%d%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) 
 alias vim='nvim'
 alias ls='eza'
 alias cat='bat'
-alias find='fd'
-alias grep='rg'
-alias copilot='gh copilot'
 
 alias g='git'
 alias tf='terraform'
@@ -163,6 +160,12 @@ export NVM_DIR="$HOME/.nvm"
 # zoxide
 #############################
 eval "$(zoxide init zsh)"
+
+#############################
+# AI
+#############################
+source ~/.zsh-ai-cmd/zsh-ai-cmd.plugin.zsh
+export ZSH_AI_CMD_PROVIDER='anthropic'
 
 #############################
 # Per-machine
