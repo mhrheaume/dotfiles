@@ -38,6 +38,7 @@ fi
 # Most programs installed through brew will be captured by $(brew shellenv) above; fzf is the
 # only one we need to configure manually.
 [ fzf > /dev/null 2>&1 ] && source <(fzf --zsh)
+[ docker > /dev/null 2>&1 ] && source $HOME/.docker/completions/_docker
 
 _gt_yargs_completions()
 {
