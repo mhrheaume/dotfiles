@@ -17,7 +17,30 @@ return {
 		{
 			"<leader>tt",
 			function()
-				require("telescope.builtin").find_files({ disable_coordinates = true, hidden = true })
+				local find_command = {
+					"rg",
+					"--files",
+					"--color",
+					"never",
+					"-uu",
+				}
+				for _, d in ipairs({
+					".git",
+					"node_modules",
+					"/target/",
+					"/build/",
+					"/.cache/",
+					"__pycache__",
+				}) do
+					table.insert(find_command, "-g")
+					table.insert(find_command, "!" .. d)
+				end
+
+				require("telescope.builtin").find_files({
+					find_command = find_command,
+					disable_coordinates = true,
+					hidden = true,
+				})
 			end,
 			desc = "Find file",
 		},
