@@ -34,6 +34,7 @@ return {
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 			vim.treesitter.language.register("bash", "zsh")
+			vim.treesitter.language.register("python", "starlark")
 			vim.treesitter.language.register("terraform", { "terraform", "terraform-vars" })
 		end,
 	},
