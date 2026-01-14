@@ -22,6 +22,8 @@ return {
 					"--files",
 					"--color",
 					"never",
+					"--glob",
+					"!.git",
 				}
 
 				require("telescope.builtin").find_files({
@@ -45,7 +47,7 @@ return {
 				require("telescope.builtin").live_grep({
 					disable_coordinates = true,
 					additional_args = function(_)
-						return { "--hidden" }
+						return { "--hidden", "--glob", "!.git" }
 					end,
 				})
 			end,
