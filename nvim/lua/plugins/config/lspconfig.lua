@@ -40,6 +40,11 @@ return function(_, _)
 		capabilities = capabilities,
 	})
 
+	vim.lsp.enable("ty")
+	vim.lsp.config("ty", {
+		capabilities = capabilities,
+	})
+
 	-- Golang
 	vim.lsp.config("gopls", {
 		capabilities = capabilities,
