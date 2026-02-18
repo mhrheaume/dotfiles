@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"1\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client -S 2>/dev/null || true"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"1\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client -S 2>/dev/null || true"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"1\" 2>/dev/null; tmux refresh-client -S 2>/dev/null || true"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"1\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
@@ -48,7 +48,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"1\" 2>/dev/null; tmux refresh-client -S 2>/dev/null || true"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"1\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
@@ -59,7 +59,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client -S 2>/dev/null || true"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       },

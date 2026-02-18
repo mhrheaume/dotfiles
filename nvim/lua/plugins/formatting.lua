@@ -24,6 +24,9 @@ return {
 			return { timeout_ms = 5000, lsp_fallback = true }
 		end,
 		formatters = {
+			jq = {
+				prepend_args = { "--indent", "2" },
+			},
 			shfmt = {
 				prepend_args = { "-i", "4" },
 			},
