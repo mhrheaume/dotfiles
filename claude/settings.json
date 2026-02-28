@@ -1,5 +1,8 @@
 {
   "permissions": {
+    "deny": [
+      "Bash(sed:*)"
+    ],
     "allow": [
       "Bash(awk:*)",
       "Bash(bat:*)",
@@ -17,6 +20,7 @@
       "Bash(head:*)",
       "Bash(jq:*)",
       "Bash(ls:*)",
+      "Bash(mise lock:*)",
       "Bash(printf:*)",
       "Bash(rg:*)",
       "Bash(sort:*)",
@@ -106,6 +110,10 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "ls-claude@lightspark": true,
