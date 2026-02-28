@@ -16,19 +16,19 @@ return function(_, _)
 	})
 
 	-- Python
-	vim.lsp.config("basedpyright", {
-		capabilities = capabilities,
-		settings = {
-			basedpyright = {
-				analysis = {
-					autoSearchPaths = true,
-					diagnosticMode = "openFilesOnly",
-					typeCheckingMode = "off",
-					useLibraryCodeForTypes = true,
-				},
-			},
-		},
-	})
+	-- vim.lsp.config("basedpyright", {
+	-- 	capabilities = capabilities,
+	-- 	settings = {
+	-- 		basedpyright = {
+	-- 			analysis = {
+	-- 				autoSearchPaths = true,
+	-- 				diagnosticMode = "openFilesOnly",
+	-- 				typeCheckingMode = "off",
+	-- 				useLibraryCodeForTypes = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- })
 
 	vim.lsp.enable("pyre")
 	vim.lsp.config("pyre", {
