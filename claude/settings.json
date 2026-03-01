@@ -20,6 +20,7 @@
       "Bash(head:*)",
       "Bash(jq:*)",
       "Bash(ls:*)",
+      "Bash(bd:*)",
       "Bash(mise lock:*)",
       "Bash(printf:*)",
       "Bash(rg:*)",
