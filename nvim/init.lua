@@ -160,5 +160,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	signs = true,
 })
 
--- Pyre is noisy.
-vim.lsp.log.set_level("off")
+

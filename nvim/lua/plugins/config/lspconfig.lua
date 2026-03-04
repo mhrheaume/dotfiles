@@ -30,11 +30,6 @@ return function(_, _)
 	-- 	},
 	-- })
 
-	vim.lsp.enable("pyre")
-	vim.lsp.config("pyre", {
-		capabilities = capabilities,
-	})
-
 	vim.lsp.enable("ruff")
 	vim.lsp.config("ruff", {
 		capabilities = capabilities,
