@@ -1,8 +1,5 @@
 {
   "permissions": {
-    "deny": [
-      "Bash(sed:*)"
-    ],
     "allow": [
       "Bash(awk:*)",
       "Bash(bat:*)",
@@ -33,8 +30,12 @@
       "Read",
       "WebFetch",
       "WebSearch"
+    ],
+    "deny": [
+      "Bash(sed:*)"
     ]
   },
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -117,10 +118,11 @@
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "ls-claude@lightspark": true,
     "beads@beads-marketplace": true,
-    "plugin-dev@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
-  }
+    "superpowers@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "ls-claude@lightspark": true
+  },
+  "skipDangerousModePermissionPrompt": true
 }
