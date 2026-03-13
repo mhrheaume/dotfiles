@@ -66,7 +66,9 @@
 [submodule]
 	recurse = true
 
-[include]
-    path = ~/.gitconfig.local
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
+[include]
+    path = ~/.gitconfig.local
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
