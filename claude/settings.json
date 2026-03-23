@@ -35,7 +35,6 @@
       "Bash(sed:*)"
     ]
   },
-  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -124,5 +123,6 @@
     "plugin-dev@claude-plugins-official": true,
     "ls-claude@lightspark": true
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "model": "opus[1m]"
 }
