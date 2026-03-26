@@ -40,6 +40,7 @@ fi
 [ fzf > /dev/null 2>&1 ] && source <(fzf --zsh)
 [ docker > /dev/null 2>&1 ] && source $HOME/.docker/completions/_docker
 
+# Graphite...?
 _gt_yargs_completions()
 {
   local reply
@@ -62,11 +63,39 @@ fi
 GIT_PS1_OMITPARSESTATE=true
 source ~/.git-prompt.sh
 
+__smart_path() {
+  local toplevel
+  toplevel=$(git rev-parse --show-toplevel 2>/dev/null) || { print -n '%~'; return }
+  local rel=${PWD#$toplevel}
+  local prefix
+  if [[ -f "$toplevel/.git" ]]; then
+    # Worktrees have a .git file pointing to the main repo's .git dir
+    local gitdir
+    gitdir=$(< "$toplevel/.git")
+    gitdir=${gitdir#gitdir: }
+    # gitdir is like /path/to/repo/.git/worktrees/<name>
+    # Walk up to find the main repo root
+    local main_root=${gitdir%/.git/worktrees/*}
+    local wt_name=${toplevel:t}
+    local repo=${main_root:t}
+  else
+    local wt_name=""
+    local repo=${toplevel:t}
+  fi
+  local suffix=""
+  [[ -n "$wt_name" ]] && suffix=" [$wt_name]"
+  if [[ -z "$rel" ]]; then
+    print -n "/…/${repo}${suffix}"
+  else
+    print -n "/…/${repo}${rel}${suffix}"
+  fi
+}
+
 autoload -Uz colors
 colors
 
 setopt PROMPT_SUBST
-PS1='%{$fg[blue]%}%d%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) %{$fg[blue]%}λ%{$reset_color%} '
+PS1='%{$fg[blue]%}$(__smart_path)%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) %{$fg[blue]%}λ%{$reset_color%} '
 
 #############################
 # Aliases
@@ -76,6 +105,7 @@ alias ls='eza'
 alias cat='bat'
 
 alias g='git'
+alias gw='cd $(git worktree list | fzf --height 40% | awk '\''{print $1}'\'')'
 alias tf='terraform'
 alias tg='terragrunt'
 alias k='kubectl'
