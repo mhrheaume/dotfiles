@@ -29,7 +29,6 @@ return {
 				additional_vim_regex_highlighting = false,
 			},
 			indent = { enable = true },
-			autotag = { enable = false },
 		},
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
@@ -37,10 +36,5 @@ return {
 			vim.treesitter.language.register("python", "starlark")
 			vim.treesitter.language.register("terraform", { "terraform", "terraform-vars" })
 		end,
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		event = { "BufReadPre", "BufNewFile" },
-		opts = {},
 	},
 }
