@@ -105,7 +105,14 @@ alias ls='eza'
 alias cat='bat'
 
 alias g='git'
-alias gw='cd $(git worktree list | fzf --height 40% | awk '\''{print $1}'\'')'
+gw() {
+    local wt rel target
+    wt=$(git worktree list | fzf --height 40% | awk '{print $1}') || return
+    [ -n "$wt" ] || return
+    rel=${PWD#$(git rev-parse --show-toplevel)}
+    target="$wt$rel"
+    cd "${target:?}" 2>/dev/null || cd "$wt"
+}
 alias tf='terraform'
 alias tg='terragrunt'
 alias k='kubectl'
