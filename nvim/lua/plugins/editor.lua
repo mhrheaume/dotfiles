@@ -66,6 +66,28 @@ return {
 			},
 		},
 	},
+	-- Git Worktrees
+	{
+		"polarmutex/git-worktree.nvim",
+		version = "^2",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("utils").on_plugin_load("telescope.nvim", function()
+				require("telescope").load_extension("git_worktree")
+			end)
+		end,
+		keys = {
+			{
+				"<leader>gw",
+				function()
+					require("telescope").extensions.git_worktree.git_worktree()
+				end,
+				desc = "Switch worktree",
+			},
+		},
+	},
 	-- Git
 	{
 		"lewis6991/gitsigns.nvim",
