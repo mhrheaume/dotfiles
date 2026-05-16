@@ -45,6 +45,17 @@ return {
 				theme = "catppuccin-macchiato",
 			},
 			sections = {
+				lualine_b = {
+					"branch",
+					{
+						function()
+							return vim.b.worktree_name or ""
+						end,
+						color = { fg = "#f5a97f" },
+					},
+					"diff",
+					"diagnostics",
+				},
 				lualine_c = {
 					{
 						"filename",

@@ -9,6 +9,36 @@ vim.opt.compatible = false
 vim.opt.history = 700
 vim.opt.hidden = true
 vim.opt.splitright = true
+vim.opt.autoread = true
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+	command = "checktime",
+})
+
+-- Worktree detection (cached per buffer for lualine)
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		if vim.b.worktree_name ~= nil then
+			return
+		end
+		local toplevel = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+		if vim.v.shell_error ~= 0 or not toplevel then
+			vim.b.worktree_name = ""
+			return
+		end
+		local main_wt = vim.fn.systemlist("git worktree list --porcelain")[1]
+		if not main_wt or not main_wt:match("^worktree ") then
+			vim.b.worktree_name = ""
+			return
+		end
+		main_wt = main_wt:gsub("^worktree ", "")
+		if toplevel ~= main_wt then
+			vim.b.worktree_name = " " .. vim.fn.fnamemodify(toplevel, ":t")
+		else
+			vim.b.worktree_name = ""
+		end
+	end,
+})
 
 -- UI
 vim.opt.ignorecase = true
@@ -28,6 +58,13 @@ vim.api.nvim_create_autocmd("VimLeave", {
 	group = "Shape",
 	callback = function()
 		vim.opt.guicursor = "a:ver90"
+	end,
+})
+
+-- Treesitter highlighting
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
 	end,
 })
 
