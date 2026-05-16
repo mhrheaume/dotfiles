@@ -33,8 +33,10 @@
     ],
     "deny": [
       "Bash(sed:*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -121,8 +123,19 @@
     "context7@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
-    "ls-claude@lightspark": true
+    "ls-claude@lightspark": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
   },
   "skipDangerousModePermissionPrompt": true,
-  "model": "opus[1m]"
+  "editorMode": "vim",
+  "skipAutoPermissionPrompt": true
 }
