@@ -91,11 +91,43 @@ __smart_path() {
   fi
 }
 
+__jj_ps1() {
+  command -v jj >/dev/null || return
+  jj --ignore-working-copy root >/dev/null 2>&1 || return
+
+  local info bookmarks change_id state conflict parent_bookmarks label suffix
+  info=$(jj --ignore-working-copy log --no-graph -r @ -T 'bookmarks.map(|b| b.name()).join(",") ++ "|" ++ change_id.shortest(8) ++ "|" ++ if(empty, "empty", "nonempty") ++ "|" ++ if(conflict, "conflict", "")' 2>/dev/null) || return
+  IFS='|' read -r bookmarks change_id state conflict <<< "$info"
+
+  if [[ -n "$bookmarks" ]]; then
+    label=$bookmarks
+  elif [[ "$state" == "empty" ]]; then
+    parent_bookmarks=$(jj --ignore-working-copy log --no-graph -r @- -T 'bookmarks.map(|b| b.name()).join(",")' 2>/dev/null)
+    label=${parent_bookmarks:-$change_id}
+  else
+    label=$change_id
+    suffix='*'
+  fi
+
+  [[ -n "$conflict" ]] && suffix="${suffix}!"
+  print -n " (jj ${label}${suffix})"
+}
+
+__vcs_ps1() {
+  local jj_prompt
+  jj_prompt=$(__jj_ps1 2>/dev/null)
+  if [[ -n "$jj_prompt" ]]; then
+    print -n "$jj_prompt"
+  else
+    __git_ps1 " (\uE0A0 %s)" 2>/dev/null
+  fi
+}
+
 autoload -Uz colors
 colors
 
 setopt PROMPT_SUBST
-PS1='%{$fg[blue]%}$(__smart_path)%{$fg_bold[green]%}$(__git_ps1 " (\uE0A0 %s)" 2> /dev/null) %{$fg[blue]%}λ%{$reset_color%} '
+PS1='%{$fg[blue]%}$(__smart_path)%{$fg_bold[green]%}$(__vcs_ps1) %{$fg[blue]%}λ%{$reset_color%} '
 
 #############################
 # Aliases
