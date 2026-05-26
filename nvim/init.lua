@@ -95,6 +95,7 @@ end, {
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = {
+		"*/*.jjdescription",
 		"*/COMMIT_EDITMSG",
 		"*/GRAPHITE_PR_DESCRIPTION.md",
 		"*/PULL_REQUEST_TEMPLATE.md",
@@ -196,5 +197,3 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	virtual_text = false,
 	signs = true,
 })
-
-
