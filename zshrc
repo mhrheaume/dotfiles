@@ -110,7 +110,7 @@ __jj_ps1() {
   fi
 
   [[ -n "$conflict" ]] && suffix="${suffix}!"
-  print -n " (jj ${label}${suffix})"
+  print -n " (\uE0A0@ ${label}${suffix})"
 }
 
 __vcs_ps1() {
