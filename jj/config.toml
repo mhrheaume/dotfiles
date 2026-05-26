@@ -1,0 +1,60 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Matthew Rheaume"
+email = "mhr@lightspark.com"
+
+[ui]
+color = "auto"
+editor = "nvim"
+pager = ["sh", "-c", "diff-so-fancy | less --tabs=4 -RFX"]
+diff-formatter = ":git"
+
+[git]
+push = "origin"
+executable-path = "git"
+
+[remotes.origin]
+auto-track-created-bookmarks = "*"
+
+[aliases]
+g = ["util", "exec", "--", "git", "grep", "-n"]
+a = ["file", "track"]
+c = ["commit"]
+co = ["edit"]
+cob = ["bookmark", "create"]
+s = ["status"]
+rb = ["rebase"]
+rbm = ["rebase", "-d", "trunk()"]
+rbc = ["resolve"]
+m = ["new", "@"]
+l = ["log"]
+lg = ["log", "-r", "::"]
+lp = ["log", "--no-graph", "-T", "description.first_line() ++ \"\\n\""]
+p = ["git", "push", "--remote", "origin"]
+up = ["git", "fetch"]
+f = ["git", "fetch"]
+d = ["diff"]
+dh = ["diff", "--from", "@-", "--to", "@"]
+dh1 = ["diff", "--from", "@--", "--to", "@"]
+dh2 = ["diff", "--from", "@---", "--to", "@"]
+dm = ["diff", "--from", "trunk()", "--to", "@"]
+files = ["diff", "--name-only"]
+history = ["log", "-p"]
+stat = ["diff", "--stat"]
+b = ["bookmark"]
+ba = ["bookmark", "list", "--all-remotes"]
+bl = ["bookmark", "list"]
+bm = ["bookmark", "rename"]
+bd = ["bookmark", "delete"]
+re = ["restore", "--from", "@-", "--to", "@"]
+
+# Git-only settings kept in ~/.gitconfig:
+# - http.postBuffer
+# - credential.helper
+# - url.ssh://git@github.com/.insteadOf=https://github.com/
+# - submodule.recurse
+# - interactive.diffFilter and diff-highlight color settings
+#
+# jj has no staging area, so there is no direct equivalent for `git diff --staged`.
+# `jj diff` shows the current working-copy change.
