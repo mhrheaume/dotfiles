@@ -31,12 +31,8 @@
       "WebFetch",
       "WebSearch"
     ],
-    "deny": [
-      "Bash(sed:*)"
-    ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -55,7 +51,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"1\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"1\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
@@ -71,13 +78,35 @@
         ]
       }
     ],
-    "PreToolUse": [
+    "PermissionRequest": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
             "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"1\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"1\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion|ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"1\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
@@ -98,6 +127,17 @@
           {
             "type": "command",
             "command": "bd prime"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set -w -t \"$TMUX_PANE\" @claude_waiting \"0\" 2>/dev/null; tmux set -w -t \"$TMUX_PANE\" @claude_working \"0\" 2>/dev/null; tmux refresh-client 2>/dev/null || true"
           }
         ]
       }
