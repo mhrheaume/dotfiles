@@ -145,6 +145,21 @@ gw() {
     target="$wt$rel"
     cd "${target:?}" 2>/dev/null || cd "$wt"
 }
+# jj analog of gw: fzf over `jj workspace list`, cd into the chosen workspace
+# root (preserving the current subdir, like gw). By convention both git
+# worktrees and jj workspaces live under .claude/worktrees/<name> (already
+# git-ignored, so neither git nor jj snapshots the nested working copy) and are
+# kept out of zoxide via _ZO_EXCLUDE_DIRS below.
+jw() {
+    local sel root rel target
+    sel=$(jj workspace list -T 'name ++ "\t" ++ root ++ "\n"' 2>/dev/null \
+        | fzf --height 40% --delimiter='\t' --with-nth=1) || return
+    [ -n "$sel" ] || return
+    root=${sel##*$'\t'}
+    rel=${PWD#$(jj workspace root 2>/dev/null)}
+    target="$root$rel"
+    cd "${target:?}" 2>/dev/null || cd "$root"
+}
 alias tf='terraform'
 alias tg='terragrunt'
 alias k='kubectl'
@@ -229,6 +244,10 @@ export NVM_DIR="$HOME/.nvm"
 #############################
 # zoxide
 #############################
+# Keep git worktrees and jj workspaces out of the zoxide DB. By convention both
+# live under .claude/worktrees/. Colon-separated globs; $HOME is zoxide's
+# default exclusion, preserved here. Navigate these via `gw` / `jw`, not `z`.
+export _ZO_EXCLUDE_DIRS="$HOME:*/.claude/worktrees/*"
 eval "$(zoxide init zsh)"
 
 #############################
