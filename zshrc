@@ -153,12 +153,52 @@ gw() {
 jw() {
     local sel root rel target
     sel=$(jj workspace list -T 'name ++ "\t" ++ root ++ "\n"' 2>/dev/null \
-        | fzf --height 40% --delimiter='\t' --with-nth=1) || return
+        | fzf --height 40% --delimiter='\t' --nth=1) || return
     [ -n "$sel" ] || return
     root=${sel##*$'\t'}
     rel=${PWD#$(jj workspace root 2>/dev/null)}
     target="$root$rel"
     cd "${target:?}" 2>/dev/null || cd "$root"
+}
+
+# Ensure .claude/worktrees/ is ignored so the parent repo never snapshots the
+# nested working copies. Best-effort: appends a local exclude when a colocated
+# .git exists and the path isn't already ignored (no-op in repos that already
+# list it in .gitignore).
+_wt_ensure_ignored() {
+    local root=$1
+    [ -d "$root/.git" ] || return 0
+    git -C "$root" check-ignore -q .claude/worktrees && return 0
+    print -r -- '.claude/worktrees/' >> "$root/.git/info/exclude"
+}
+
+# Create a jj workspace at .claude/worktrees/<name> and cd into it.
+# Usage: jwn <name> [revision]
+jwn() {
+    local name=$1 rev=$2 root dir
+    [ -n "$name" ] || { print -u2 "usage: jwn <name> [revision]"; return 1; }
+    root=$(jj workspace root 2>/dev/null) \
+        || { print -u2 "jwn: not in a jj repo"; return 1; }
+    dir="$root/.claude/worktrees/$name"
+    _wt_ensure_ignored "$root"
+    mkdir -p "${dir:h}"   # jj workspace add doesn't create intermediate parents
+    jj workspace add ${rev:+-r "$rev"} "$dir" || return
+    cd "$dir"
+}
+
+# fzf-pick a jj workspace (never 'default') and remove it (forget + delete the
+# dir). Steps out to the default workspace first if you're inside the target.
+jwrm() {
+    local list def sel name dir
+    list=$(jj workspace list -T 'name ++ "\t" ++ root ++ "\n"' 2>/dev/null) || return
+    def=$(awk -F'\t' '$1=="default"{print $2}' <<< "$list")
+    sel=$(grep -v $'^default\t' <<< "$list" \
+        | fzf --height 40% --delimiter='\t' --with-nth=1) || return
+    [ -n "$sel" ] || return
+    name=${sel%%$'\t'*}
+    dir=${sel##*$'\t'}
+    case "$PWD" in "$dir"|"$dir"/*) cd "${def:-$root}" || return;; esac
+    jj workspace forget "$name" && rm -rf "$dir" && print "removed workspace $name"
 }
 alias tf='terraform'
 alias tg='terragrunt'
