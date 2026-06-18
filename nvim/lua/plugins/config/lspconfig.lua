@@ -49,19 +49,19 @@ return function(_, _)
 	-- 	},
 	-- })
 
-	vim.lsp.enable("ruff")
 	vim.lsp.config("ruff", {
 		capabilities = capabilities,
 		cmd = uv_python_lsp({ "ruff", "server" }),
 		root_dir = python_project_root,
 	})
+	vim.lsp.enable("ruff")
 
-	vim.lsp.enable("ty")
 	vim.lsp.config("ty", {
 		capabilities = capabilities,
 		cmd = uv_python_lsp({ "ty", "server" }),
 		root_dir = python_project_root,
 	})
+	vim.lsp.enable("ty")
 
 	-- Golang
 	vim.lsp.config("gopls", {
