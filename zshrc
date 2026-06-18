@@ -64,24 +64,41 @@ GIT_PS1_OMITPARSESTATE=true
 source ~/.git-prompt.sh
 
 __smart_path() {
-  local toplevel
-  toplevel=$(git rev-parse --show-toplevel 2>/dev/null) || { print -n '%~'; return }
-  local rel=${PWD#$toplevel}
-  local prefix
-  if [[ -f "$toplevel/.git" ]]; then
-    # Worktrees have a .git file pointing to the main repo's .git dir
-    local gitdir
-    gitdir=$(< "$toplevel/.git")
-    gitdir=${gitdir#gitdir: }
-    # gitdir is like /path/to/repo/.git/worktrees/<name>
-    # Walk up to find the main repo root
-    local main_root=${gitdir%/.git/worktrees/*}
-    local wt_name=${toplevel:t}
-    local repo=${main_root:t}
+  local toplevel rel wt_name repo git_top jj_root d
+  git_top=$(git rev-parse --show-toplevel 2>/dev/null)
+
+  # Find the nearest jj workspace root (nearest ancestor with a .jj entry) via a
+  # filesystem walk -- no subprocess, so colocated repos pay nothing here. A
+  # secondary jj workspace (e.g. nested under .claude/worktrees/) has its own
+  # .jj below git_top; the colocated default workspace has .jj == git_top.
+  d=$PWD
+  while [[ -n "$d" ]]; do
+    [[ -e "$d/.jj" ]] && { jj_root=$d; break; }
+    [[ "$d" == "/" ]] && break
+    d=${d:h}
+  done
+
+  if [[ -n "$jj_root" && "$jj_root" != "$git_top" ]]; then
+    # Secondary jj workspace: render repo[workspace], mirroring git worktrees.
+    # --ignore-working-copy avoids snapshotting on every prompt.
+    toplevel=$jj_root
+    rel=${PWD#$toplevel}
+    local list def_root cur_name
+    list=$(jj --ignore-working-copy workspace list \
+      -T 'name ++ "\t" ++ root ++ "\n"' 2>/dev/null)
+    def_root=$(awk -F'\t' '$1=="default"{print $2}' <<< "$list")
+    cur_name=$(awk -F'\t' -v c="$toplevel" '$2==c{print $1}' <<< "$list")
+    repo=${${def_root:t}:-${toplevel:t}}
+    [[ -n "$cur_name" && "$cur_name" != "default" ]] && wt_name=$cur_name || wt_name=""
+  elif [[ -n "$git_top" ]]; then
+    toplevel=$git_top
+    rel=${PWD#$toplevel}
+    wt_name=""
+    repo=${toplevel:t}
   else
-    local wt_name=""
-    local repo=${toplevel:t}
+    print -n '%~'; return
   fi
+
   local suffix=""
   [[ -n "$wt_name" ]] && suffix=" [$wt_name]"
   if [[ -z "$rel" ]]; then
