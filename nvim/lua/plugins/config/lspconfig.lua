@@ -1,6 +1,25 @@
 return function(_, _)
 	local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+	local function python_project_root(bufnr, on_dir)
+		local root = vim.fs.root(bufnr, { "uv.lock" })
+			or vim.fs.root(bufnr, { "pyproject.toml" })
+		if root then
+			on_dir(root)
+		end
+	end
+
+	local function uv_python_lsp(args)
+		return function(dispatchers, config)
+			local root = assert(config.root_dir, "uv Python LSP requires a project root")
+			return vim.lsp.rpc.start(
+				vim.list_extend({ "uv", "run", "--project", root }, args),
+				dispatchers,
+				{ cwd = root }
+			)
+		end
+	end
+
 	vim.lsp.config("lua_ls", {
 		capabilities = capabilities,
 		settings = {
@@ -33,11 +52,15 @@ return function(_, _)
 	vim.lsp.enable("ruff")
 	vim.lsp.config("ruff", {
 		capabilities = capabilities,
+		cmd = uv_python_lsp({ "ruff", "server" }),
+		root_dir = python_project_root,
 	})
 
 	vim.lsp.enable("ty")
 	vim.lsp.config("ty", {
 		capabilities = capabilities,
+		cmd = uv_python_lsp({ "ty", "server" }),
+		root_dir = python_project_root,
 	})
 
 	-- Golang
