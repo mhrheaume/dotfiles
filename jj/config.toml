@@ -9,6 +9,7 @@ color = "auto"
 editor = "nvim"
 pager = ["sh", "-c", "diff-so-fancy | less --tabs=4 -RFX"]
 diff-formatter = ":git"
+merge-editor = "vimdiff"
 
 [colors]
 "diff token" = { underline = false }
@@ -40,6 +41,9 @@ bl = ["bookmark", "list"]
 bm = ["bookmark", "rename"]
 bd = ["bookmark", "delete"]
 re = ["restore", "--from", "@-", "--to", "@"]
+
+[merge-tools.vimdiff]
+program = "nvim"
 
 # Git-only settings kept in ~/.gitconfig:
 # - http.postBuffer
